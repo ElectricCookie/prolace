@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:home_portal/app/app.locator.dart';
 import 'package:home_portal/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,6 +14,7 @@ void main() async {
   setupLocator();
 
   var settings = locator<SettingsService>();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await settings.init();
 
   runApp(const App());
@@ -32,14 +36,14 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: light.copyWith(
           appBarTheme: AppBarTheme(
-              backgroundColor: light.colorScheme.primaryContainer,
-              foregroundColor: light.colorScheme.onPrimaryContainer,
+              backgroundColor: light.colorScheme.background,
+              foregroundColor: light.colorScheme.onBackground,
               brightness: Brightness.dark)),
       // Same definition for the dark theme, but using FlexThemeData.dark().
       darkTheme: dark.copyWith(
           appBarTheme: AppBarTheme(
-              backgroundColor: dark.colorScheme.primaryContainer,
-              foregroundColor: dark.colorScheme.onPrimaryContainer,
+              backgroundColor: dark.colorScheme.background,
+              foregroundColor: dark.colorScheme.onBackground,
               brightness: Brightness.dark)),
       // Use the above dark or light theme based on active themeMode.
       themeMode: themeMode,

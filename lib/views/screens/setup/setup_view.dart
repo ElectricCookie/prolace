@@ -29,7 +29,11 @@ class SetupView extends StatelessWidget with $SetupView {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 48.0, vertical: 16),
-                  child: Image.asset("assets/plugin.png"),
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width / 3,
+                          maxHeight: MediaQuery.of(context).size.height / 3),
+                      child: Image.asset("assets/plugin.png")),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),

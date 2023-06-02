@@ -6,15 +6,16 @@ part 'oauth_token_result.g.dart';
 class OAuthTokenResult {
   String? accessToken;
   String? refreshToken;
-  String? idToken;
+
   int expiresIn;
   OAuthTokenResult({
     this.accessToken,
     this.refreshToken,
-    this.idToken,
     required this.expiresIn,
   });
 
   factory OAuthTokenResult.fromJson(Map<String, dynamic> json) =>
       _$OAuthTokenResultFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OAuthTokenResultToJson(this);
 }

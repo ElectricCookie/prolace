@@ -1,4 +1,6 @@
 PODS:
+  - all_sensors (0.0.1):
+    - Flutter
   - AppAuth (1.5.0):
     - AppAuth/Core (= 1.5.0)
     - AppAuth/ExternalUserAgent (= 1.5.0)
@@ -13,14 +15,18 @@ PODS:
     - Flutter
   - flutter_secure_storage (3.3.1):
     - Flutter
+  - screen_brightness_ios (0.1.0):
+    - Flutter
   - shared_preferences_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
+  - all_sensors (from `.symlinks/plugins/all_sensors/ios`)
   - bonsoir (from `.symlinks/plugins/bonsoir/ios`)
   - Flutter (from `Flutter`)
   - flutter_appauth (from `.symlinks/plugins/flutter_appauth/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
 
 SPEC REPOS:
@@ -28,6 +34,8 @@ SPEC REPOS:
     - AppAuth
 
 EXTERNAL SOURCES:
+  all_sensors:
+    :path: ".symlinks/plugins/all_sensors/ios"
   bonsoir:
     :path: ".symlinks/plugins/bonsoir/ios"
   Flutter:
@@ -36,15 +44,19 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_appauth/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  screen_brightness_ios:
+    :path: ".symlinks/plugins/screen_brightness_ios/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
 
 SPEC CHECKSUMS:
+  all_sensors: 13f46502204bebbd1e06b65ff3d7cdaa03d88b26
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
   bonsoir: c97724f65041a4068af8ab5f3449ae7f58b725b1
   Flutter: 405776dd0763d7e32a8f989d4e271ca1317d080c
   flutter_appauth: 2c4a407e6d649df3f2308375fb891822dcff291b
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
+  screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3

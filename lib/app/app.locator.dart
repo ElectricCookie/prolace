@@ -9,7 +9,9 @@
 import 'package:stacked_core/stacked_core.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../services/auth/auth.dart';
 import '../services/autodiscovery/autodiscovery_service.dart';
+import '../services/hass/hass_service.dart';
 import '../services/settings/settings_service.dart';
 
 final locator = StackedLocator.instance;
@@ -25,4 +27,6 @@ Future<void> setupLocator(
   locator.registerSingleton(DialogService());
   locator.registerSingleton(SettingsService());
   locator.registerLazySingleton(() => AutodiscoveryService());
+  locator.registerLazySingleton(() => AuthService());
+  locator.registerLazySingleton(() => HassService());
 }

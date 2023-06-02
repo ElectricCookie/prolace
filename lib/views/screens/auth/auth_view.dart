@@ -14,6 +14,8 @@ import 'auth_view.form.dart';
   ],
 )
 class AuthView extends StatelessWidget with $AuthView {
+  AuthView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AuthModel>.reactive(
@@ -23,16 +25,28 @@ class AuthView extends StatelessWidget with $AuthView {
                 elevation: 0,
                 title: const Text("Auth"),
               ),
-              body: ListView(children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    controller: accessTokenController,
-                    decoration:
-                        InputDecoration(label: Text("Long lived access token")),
-                  ),
-                ),
-              ]),
+              body: ListView(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  children: [
+                    Text(
+                      "Authentication is required.",
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                        onPressed: model.login,
+                        child: const Text("Login with OAuth")),
+                    const SizedBox(height: 16),
+                    const Text(
+                        "In case you have trouble with OAuth, you can use a long lived access token:"),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: accessTokenController,
+                      decoration: const InputDecoration(
+                          label: Text("Long lived access token")),
+                    ),
+                  ]),
             ));
   }
 }

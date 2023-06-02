@@ -21,7 +21,6 @@ enum AuthServiceStatus {
 // Preference keys for storing the tokens.
 String prefsAccessToken = "auth_service_access_token";
 String prefsRefreshToken = "auth_service_refresh_token";
-String prefsIdToken = "auth_service_id_token";
 String prefsAccessTokenExpiry = "auth_service_access_token_expiry";
 
 class AuthService extends ChangeNotifier {
@@ -40,13 +39,13 @@ class AuthService extends ChangeNotifier {
   late OAuthHandler _handler;
 
   Future<void> init({
-    required String discoveryUrl,
+    required String address,
     required String clientId,
     required String redirectUrl,
     required List<String> scopes,
   }) async {
     _handler = MobileAuth(
-      discoveryUrl: discoveryUrl,
+      address: address,
       clientId: clientId,
       redirectUrl: redirectUrl,
       scopes: scopes,
@@ -94,11 +93,10 @@ class AuthService extends ChangeNotifier {
   // Token getters
   Future<String?> get refreshToken => _storage.read(key: prefsRefreshToken);
   Future<String?> get accessToken => _storage.read(key: prefsAccessToken);
-  Future<String?> get idToken => _storage.read(key: prefsIdToken);
 
   // Return a map  of claims in the id token
   Future<Map<String, dynamic>?> get idClaims async {
-    var token = await idToken;
+    var token = await refreshToken;
 
     return token != null ? getTokenPayload(token) : null;
   }
@@ -173,10 +171,6 @@ class AuthService extends ChangeNotifier {
     if (response.refreshToken != null) {
       _storage.write(key: prefsRefreshToken, value: response.refreshToken!);
     }
-
-    if (response.idToken != null) {
-      _storage.write(key: prefsIdToken, value: response.idToken!);
-    }
   }
 
   // Try to log the user in. Returns a future bool whether the attempt was successful.
@@ -190,7 +184,7 @@ class AuthService extends ChangeNotifier {
   Future<void> logout() async {
     _storage.delete(key: prefsAccessToken);
     _storage.delete(key: prefsRefreshToken);
-    _storage.delete(key: prefsIdToken);
+
     _storage.delete(key: prefsAccessTokenExpiry);
     _status = AuthServiceStatus.loggedOut;
     notifyListeners();

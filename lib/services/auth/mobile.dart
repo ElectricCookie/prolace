@@ -4,7 +4,7 @@ import 'oauth_handler.dart';
 import 'oauth_token_result.dart';
 
 class MobileAuth with OAuthHandler {
-  final String discoveryUrl;
+  final String address;
   final String clientId;
   final String redirectUrl;
   final List<String> scopes;
@@ -12,31 +12,37 @@ class MobileAuth with OAuthHandler {
   final FlutterAppAuth appAuth = FlutterAppAuth();
 
   MobileAuth({
-    required this.discoveryUrl,
+    required this.address,
     required this.clientId,
     required this.redirectUrl,
     required this.scopes,
   });
+
+  AuthorizationServiceConfiguration get _configuration =>
+      AuthorizationServiceConfiguration(
+          authorizationEndpoint: "$address/auth/authorize",
+          tokenEndpoint: "$address/auth/token");
 
   @override
   Future<OAuthTokenResult> login() async {
     final AuthorizationTokenResponse? result =
         await appAuth.authorizeAndExchangeCode(AuthorizationTokenRequest(
       clientId,
+      allowInsecureConnections: true,
       redirectUrl,
-      discoveryUrl: discoveryUrl,
+      serviceConfiguration: _configuration,
       scopes: scopes,
     ));
     if (result == null) {
       throw Exception("Failed to login. No result was returned");
     }
+    print(result);
     return OAuthTokenResult(
       accessToken: result.accessToken!,
       refreshToken: result.refreshToken!,
       expiresIn: result.accessTokenExpirationDateTime!
           .difference(DateTime.now())
           .inSeconds,
-      idToken: result.idToken!,
     );
   }
 
@@ -46,8 +52,9 @@ class MobileAuth with OAuthHandler {
   ) async {
     final TokenResponse? result = await appAuth.token(TokenRequest(
         clientId, redirectUrl,
-        discoveryUrl: discoveryUrl,
+        serviceConfiguration: _configuration,
         refreshToken: refreshToken,
+        allowInsecureConnections: true,
         scopes: scopes));
 
     if (result == null) {
@@ -60,7 +67,6 @@ class MobileAuth with OAuthHandler {
       expiresIn: result.accessTokenExpirationDateTime!
           .difference(DateTime.now())
           .inSeconds,
-      idToken: result.idToken,
     );
   }
 }

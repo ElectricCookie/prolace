@@ -38,10 +38,10 @@ class MirrorView extends StackedView<MirrorModel> {
                   children: [
                     const DefaultTextStyle(
                         style: TextStyle(
-                            fontSize: 64, fontWeight: FontWeight.bold),
+                            fontSize: 128, fontWeight: FontWeight.bold),
                         child: TimeView()),
                     const SizedBox(height: 4),
-                    Text(viewModel.date, style: const TextStyle(fontSize: 16)),
+                    Text(viewModel.date, style: const TextStyle(fontSize: 32)),
                     const SizedBox(height: 16),
                     Wrap(
                       spacing: 8,

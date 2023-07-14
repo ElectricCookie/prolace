@@ -34,7 +34,8 @@ class MirrorView extends StackedView<MirrorModel> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width / 3,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(
+                  left: 8.0, top: MediaQuery.of(context).size.height / 4.0),
               child: ListView(children: [
                 const DefaultTextStyle(
                     style:
@@ -127,8 +128,9 @@ class CardItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: SizedBox(
+        width: 300,
         child: Card(
-          color: Colors.white.withAlpha(230),
+          color: Colors.white.withAlpha(200),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
@@ -136,7 +138,7 @@ class CardItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.white.withAlpha(230),
+                    backgroundColor: Colors.white.withAlpha(100),
                     child: Icon(Icons.lightbulb,
                         size: 24, color: Colors.yellow.shade800),
                   ),

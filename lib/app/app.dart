@@ -6,6 +6,7 @@ import 'package:home_portal/views/screens/auth/auth_view.dart';
 import 'package:home_portal/views/screens/home/home_view.dart';
 import 'package:home_portal/views/screens/settings/settings_view.dart';
 import 'package:home_portal/views/screens/setup/setup_view.dart';
+import 'package:home_portal/views/screens/view_selector/view_selector_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -18,6 +19,7 @@ import '../views/screens/settings/entity_selector_view.dart';
   MaterialRoute(page: HomeView),
   MaterialRoute(page: AuthView),
   MaterialRoute(page: EntitySelectorView),
+  MaterialRoute(page: ViewSelectorView),
   MaterialRoute(page: SettingsView)
 ], dependencies: [
   Singleton(classType: NavigationService),

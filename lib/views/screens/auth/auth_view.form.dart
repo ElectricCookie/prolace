@@ -4,7 +4,7 @@
 // StackedFormGenerator
 // **************************************************************************
 
-// ignore_for_file: public_member_api_docs,  constant_identifier_names, non_constant_identifier_names,unnecessary_this
+// ignore_for_file: public_member_api_docs, constant_identifier_names, non_constant_identifier_names,unnecessary_this
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -19,16 +19,19 @@ final Map<String, String? Function(String?)?> _AuthViewTextValidations = {
   AccessTokenValueKey: null,
 };
 
-mixin $AuthView on StatelessWidget {
+mixin $AuthView {
   TextEditingController get accessTokenController =>
       _getFormTextEditingController(AccessTokenValueKey);
   FocusNode get accessTokenFocusNode => _getFormFocusNode(AccessTokenValueKey);
 
-  TextEditingController _getFormTextEditingController(String key,
-      {String? initialValue}) {
+  TextEditingController _getFormTextEditingController(
+    String key, {
+    String? initialValue,
+  }) {
     if (_AuthViewTextEditingControllers.containsKey(key)) {
       return _AuthViewTextEditingControllers[key]!;
     }
+
     _AuthViewTextEditingControllers[key] =
         TextEditingController(text: initialValue);
     return _AuthViewTextEditingControllers[key]!;
@@ -44,11 +47,21 @@ mixin $AuthView on StatelessWidget {
 
   /// Registers a listener on every generated controller that calls [model.setData()]
   /// with the latest textController values
+  void syncFormWithViewModel(FormViewModel model) {
+    accessTokenController.addListener(() => _updateFormData(model));
+  }
+
+  /// Registers a listener on every generated controller that calls [model.setData()]
+  /// with the latest textController values
+  @Deprecated(
+    'Use syncFormWithViewModel instead.'
+    'This feature was deprecated after 3.1.0.',
+  )
   void listenToFormUpdated(FormViewModel model) {
     accessTokenController.addListener(() => _updateFormData(model));
   }
 
-  final bool _autoTextFieldValidation = true;
+  static const bool _autoTextFieldValidation = true;
   bool validateFormFields(FormViewModel model) {
     _updateFormData(model, forceValidate: true);
     return model.isFormValid;
@@ -62,24 +75,10 @@ mixin $AuthView on StatelessWidget {
           AccessTokenValueKey: accessTokenController.text,
         }),
     );
+
     if (_autoTextFieldValidation || forceValidate) {
-      _updateValidationData(model);
+      updateValidationData(model);
     }
-  }
-
-  /// Updates the fieldsValidationMessages on the FormViewModel
-  void _updateValidationData(FormViewModel model) =>
-      model.setValidationMessages({
-        AccessTokenValueKey: _getValidationMessage(AccessTokenValueKey),
-      });
-
-  /// Returns the validation message for the given key
-  String? _getValidationMessage(String key) {
-    final validatorForKey = _AuthViewTextValidations[key];
-    if (validatorForKey == null) return null;
-    String? validationMessageForKey =
-        validatorForKey(_AuthViewTextEditingControllers[key]!.text);
-    return validationMessageForKey;
   }
 
   /// Calls dispose on all the generated controllers and focus nodes
@@ -104,7 +103,22 @@ extension ValueProperties on FormViewModel {
   String? get accessTokenValue =>
       this.formValueMap[AccessTokenValueKey] as String?;
 
-  bool get hasAccessToken => this.formValueMap.containsKey(AccessTokenValueKey);
+  set accessTokenValue(String? value) {
+    this.setData(
+      this.formValueMap
+        ..addAll({
+          AccessTokenValueKey: value,
+        }),
+    );
+
+    if (_AuthViewTextEditingControllers.containsKey(AccessTokenValueKey)) {
+      _AuthViewTextEditingControllers[AccessTokenValueKey]?.text = value ?? '';
+    }
+  }
+
+  bool get hasAccessToken =>
+      this.formValueMap.containsKey(AccessTokenValueKey) &&
+      (accessTokenValue?.isNotEmpty ?? false);
 
   bool get hasAccessTokenValidationMessage =>
       this.fieldsValidationMessages[AccessTokenValueKey]?.isNotEmpty ?? false;
@@ -116,4 +130,33 @@ extension ValueProperties on FormViewModel {
 extension Methods on FormViewModel {
   setAccessTokenValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[AccessTokenValueKey] = validationMessage;
+
+  /// Clears text input fields on the Form
+  void clearForm() {
+    accessTokenValue = '';
+  }
+
+  /// Validates text input fields on the Form
+  void validateForm() {
+    this.setValidationMessages({
+      AccessTokenValueKey: getValidationMessage(AccessTokenValueKey),
+    });
+  }
 }
+
+/// Returns the validation message for the given key
+String? getValidationMessage(String key) {
+  final validatorForKey = _AuthViewTextValidations[key];
+  if (validatorForKey == null) return null;
+
+  String? validationMessageForKey = validatorForKey(
+    _AuthViewTextEditingControllers[key]!.text,
+  );
+
+  return validationMessageForKey;
+}
+
+/// Updates the fieldsValidationMessages on the FormViewModel
+void updateValidationData(FormViewModel model) => model.setValidationMessages({
+      AccessTokenValueKey: getValidationMessage(AccessTokenValueKey),
+    });

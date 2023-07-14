@@ -33,11 +33,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  stacked: ^2.3.13
-  stacked_services: ^0.9.3
+  stacked: ^3.4.0
+  stacked_services: ^1.1.0
   screen_brightness: ^0.2.2
   bonsoir: ^1.0.1+2
-  flutter_secure_storage: ^5.0.2
   all_sensors: ^0.4.2
   flutter_neumorphic: ^3.2.0
   material_design_icons_flutter: ^5.0.6996
@@ -50,6 +49,7 @@ dependencies:
   flutter_hooks: ^0.18.5+1
   stacked_hooks: ^0.2.2
   freezed_annotation: ^2.1.0
+  flutter_reorderable_grid_view: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +62,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   json_serializable: ^6.3.1
-  stacked_generator: ^0.7.13
+  stacked_generator: ^1.3.3
   build_runner: ^2.2.0
   freezed: ^2.1.0+1
 

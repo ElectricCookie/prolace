@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 
-class SettingsService with ReactiveServiceMixin {
+class SettingsService with ListenableServiceMixin {
   late SharedPreferences _prefs;
 
   Future<void> init() async {
@@ -20,6 +20,20 @@ class SettingsService with ReactiveServiceMixin {
 
   set screenSaverEnabled(bool value) {
     _prefs.setBool('screenSaverEnabled', value);
+    notifyListeners();
+  }
+
+  String get pinnedView => _prefs.getString('pinnedView') ?? 'none';
+
+  set pinnedView(String value) {
+    _prefs.setString('pinnedView', value);
+    notifyListeners();
+  }
+
+  bool get allowNavigation => _prefs.getBool('allowNavigation') ?? false;
+
+  set allowNavigation(bool value) {
+    _prefs.setBool('allowNavigation', value);
     notifyListeners();
   }
 

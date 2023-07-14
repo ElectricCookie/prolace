@@ -40,7 +40,8 @@ mixin _$HassConfig {
 abstract class $HassConfigCopyWith<$Res> {
   factory $HassConfigCopyWith(
           HassConfig value, $Res Function(HassConfig) then) =
-      _$HassConfigCopyWithImpl<$Res>;
+      _$HassConfigCopyWithImpl<$Res, HassConfig>;
+  @useResult
   $Res call(
       {List<String> components,
       String locationName,
@@ -56,69 +57,73 @@ abstract class $HassConfigCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HassConfigCopyWithImpl<$Res> implements $HassConfigCopyWith<$Res> {
+class _$HassConfigCopyWithImpl<$Res, $Val extends HassConfig>
+    implements $HassConfigCopyWith<$Res> {
   _$HassConfigCopyWithImpl(this._value, this._then);
 
-  final HassConfig _value;
   // ignore: unused_field
-  final $Res Function(HassConfig) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? components = freezed,
-    Object? locationName = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
-    Object? elevation = freezed,
-    Object? timeZone = freezed,
-    Object? unitSystem = freezed,
-    Object? version = freezed,
-    Object? whitelistExternalDirs = freezed,
+    Object? components = null,
+    Object? locationName = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? elevation = null,
+    Object? timeZone = null,
+    Object? unitSystem = null,
+    Object? version = null,
+    Object? whitelistExternalDirs = null,
   }) {
     return _then(_value.copyWith(
-      components: components == freezed
+      components: null == components
           ? _value.components
           : components // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      locationName: locationName == freezed
+      locationName: null == locationName
           ? _value.locationName
           : locationName // ignore: cast_nullable_to_non_nullable
               as String,
-      latitude: latitude == freezed
+      latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as String,
-      longitude: longitude == freezed
+      longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as String,
-      elevation: elevation == freezed
+      elevation: null == elevation
           ? _value.elevation
           : elevation // ignore: cast_nullable_to_non_nullable
               as String,
-      timeZone: timeZone == freezed
+      timeZone: null == timeZone
           ? _value.timeZone
           : timeZone // ignore: cast_nullable_to_non_nullable
               as String,
-      unitSystem: unitSystem == freezed
+      unitSystem: null == unitSystem
           ? _value.unitSystem
           : unitSystem // ignore: cast_nullable_to_non_nullable
               as HassUnitSystem,
-      version: version == freezed
+      version: null == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as String,
-      whitelistExternalDirs: whitelistExternalDirs == freezed
+      whitelistExternalDirs: null == whitelistExternalDirs
           ? _value.whitelistExternalDirs
           : whitelistExternalDirs // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $HassUnitSystemCopyWith<$Res> get unitSystem {
     return $HassUnitSystemCopyWith<$Res>(_value.unitSystem, (value) {
-      return _then(_value.copyWith(unitSystem: value));
+      return _then(_value.copyWith(unitSystem: value) as $Val);
     });
   }
 }
@@ -130,6 +135,7 @@ abstract class _$$_HassConfigCopyWith<$Res>
           _$_HassConfig value, $Res Function(_$_HassConfig) then) =
       __$$_HassConfigCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<String> components,
       String locationName,
@@ -146,61 +152,60 @@ abstract class _$$_HassConfigCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_HassConfigCopyWithImpl<$Res> extends _$HassConfigCopyWithImpl<$Res>
+class __$$_HassConfigCopyWithImpl<$Res>
+    extends _$HassConfigCopyWithImpl<$Res, _$_HassConfig>
     implements _$$_HassConfigCopyWith<$Res> {
   __$$_HassConfigCopyWithImpl(
       _$_HassConfig _value, $Res Function(_$_HassConfig) _then)
-      : super(_value, (v) => _then(v as _$_HassConfig));
+      : super(_value, _then);
 
-  @override
-  _$_HassConfig get _value => super._value as _$_HassConfig;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? components = freezed,
-    Object? locationName = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
-    Object? elevation = freezed,
-    Object? timeZone = freezed,
-    Object? unitSystem = freezed,
-    Object? version = freezed,
-    Object? whitelistExternalDirs = freezed,
+    Object? components = null,
+    Object? locationName = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? elevation = null,
+    Object? timeZone = null,
+    Object? unitSystem = null,
+    Object? version = null,
+    Object? whitelistExternalDirs = null,
   }) {
     return _then(_$_HassConfig(
-      components: components == freezed
+      components: null == components
           ? _value._components
           : components // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      locationName: locationName == freezed
+      locationName: null == locationName
           ? _value.locationName
           : locationName // ignore: cast_nullable_to_non_nullable
               as String,
-      latitude: latitude == freezed
+      latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
               as String,
-      longitude: longitude == freezed
+      longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as String,
-      elevation: elevation == freezed
+      elevation: null == elevation
           ? _value.elevation
           : elevation // ignore: cast_nullable_to_non_nullable
               as String,
-      timeZone: timeZone == freezed
+      timeZone: null == timeZone
           ? _value.timeZone
           : timeZone // ignore: cast_nullable_to_non_nullable
               as String,
-      unitSystem: unitSystem == freezed
+      unitSystem: null == unitSystem
           ? _value.unitSystem
           : unitSystem // ignore: cast_nullable_to_non_nullable
               as HassUnitSystem,
-      version: version == freezed
+      version: null == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as String,
-      whitelistExternalDirs: whitelistExternalDirs == freezed
+      whitelistExternalDirs: null == whitelistExternalDirs
           ? _value._whitelistExternalDirs
           : whitelistExternalDirs // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -267,15 +272,19 @@ class _$_HassConfig implements _HassConfig {
             other is _$_HassConfig &&
             const DeepCollectionEquality()
                 .equals(other._components, _components) &&
-            const DeepCollectionEquality()
-                .equals(other.locationName, locationName) &&
-            const DeepCollectionEquality().equals(other.latitude, latitude) &&
-            const DeepCollectionEquality().equals(other.longitude, longitude) &&
-            const DeepCollectionEquality().equals(other.elevation, elevation) &&
-            const DeepCollectionEquality().equals(other.timeZone, timeZone) &&
-            const DeepCollectionEquality()
-                .equals(other.unitSystem, unitSystem) &&
-            const DeepCollectionEquality().equals(other.version, version) &&
+            (identical(other.locationName, locationName) ||
+                other.locationName == locationName) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.elevation, elevation) ||
+                other.elevation == elevation) &&
+            (identical(other.timeZone, timeZone) ||
+                other.timeZone == timeZone) &&
+            (identical(other.unitSystem, unitSystem) ||
+                other.unitSystem == unitSystem) &&
+            (identical(other.version, version) || other.version == version) &&
             const DeepCollectionEquality()
                 .equals(other._whitelistExternalDirs, _whitelistExternalDirs));
   }
@@ -285,17 +294,18 @@ class _$_HassConfig implements _HassConfig {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_components),
-      const DeepCollectionEquality().hash(locationName),
-      const DeepCollectionEquality().hash(latitude),
-      const DeepCollectionEquality().hash(longitude),
-      const DeepCollectionEquality().hash(elevation),
-      const DeepCollectionEquality().hash(timeZone),
-      const DeepCollectionEquality().hash(unitSystem),
-      const DeepCollectionEquality().hash(version),
+      locationName,
+      latitude,
+      longitude,
+      elevation,
+      timeZone,
+      unitSystem,
+      version,
       const DeepCollectionEquality().hash(_whitelistExternalDirs));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HassConfigCopyWith<_$_HassConfig> get copyWith =>
       __$$_HassConfigCopyWithImpl<_$_HassConfig>(this, _$identity);
 
@@ -367,44 +377,47 @@ mixin _$HassUnitSystem {
 abstract class $HassUnitSystemCopyWith<$Res> {
   factory $HassUnitSystemCopyWith(
           HassUnitSystem value, $Res Function(HassUnitSystem) then) =
-      _$HassUnitSystemCopyWithImpl<$Res>;
+      _$HassUnitSystemCopyWithImpl<$Res, HassUnitSystem>;
+  @useResult
   $Res call({String length, String mass, String temperature, String volume});
 }
 
 /// @nodoc
-class _$HassUnitSystemCopyWithImpl<$Res>
+class _$HassUnitSystemCopyWithImpl<$Res, $Val extends HassUnitSystem>
     implements $HassUnitSystemCopyWith<$Res> {
   _$HassUnitSystemCopyWithImpl(this._value, this._then);
 
-  final HassUnitSystem _value;
   // ignore: unused_field
-  final $Res Function(HassUnitSystem) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? length = freezed,
-    Object? mass = freezed,
-    Object? temperature = freezed,
-    Object? volume = freezed,
+    Object? length = null,
+    Object? mass = null,
+    Object? temperature = null,
+    Object? volume = null,
   }) {
     return _then(_value.copyWith(
-      length: length == freezed
+      length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
               as String,
-      mass: mass == freezed
+      mass: null == mass
           ? _value.mass
           : mass // ignore: cast_nullable_to_non_nullable
               as String,
-      temperature: temperature == freezed
+      temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
               as String,
-      volume: volume == freezed
+      volume: null == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -415,41 +428,40 @@ abstract class _$$_HassUnitSystemCopyWith<$Res>
           _$_HassUnitSystem value, $Res Function(_$_HassUnitSystem) then) =
       __$$_HassUnitSystemCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String length, String mass, String temperature, String volume});
 }
 
 /// @nodoc
 class __$$_HassUnitSystemCopyWithImpl<$Res>
-    extends _$HassUnitSystemCopyWithImpl<$Res>
+    extends _$HassUnitSystemCopyWithImpl<$Res, _$_HassUnitSystem>
     implements _$$_HassUnitSystemCopyWith<$Res> {
   __$$_HassUnitSystemCopyWithImpl(
       _$_HassUnitSystem _value, $Res Function(_$_HassUnitSystem) _then)
-      : super(_value, (v) => _then(v as _$_HassUnitSystem));
+      : super(_value, _then);
 
-  @override
-  _$_HassUnitSystem get _value => super._value as _$_HassUnitSystem;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? length = freezed,
-    Object? mass = freezed,
-    Object? temperature = freezed,
-    Object? volume = freezed,
+    Object? length = null,
+    Object? mass = null,
+    Object? temperature = null,
+    Object? volume = null,
   }) {
     return _then(_$_HassUnitSystem(
-      length: length == freezed
+      length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
               as String,
-      mass: mass == freezed
+      mass: null == mass
           ? _value.mass
           : mass // ignore: cast_nullable_to_non_nullable
               as String,
-      temperature: temperature == freezed
+      temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
               as String,
-      volume: volume == freezed
+      volume: null == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
               as String,
@@ -488,24 +500,21 @@ class _$_HassUnitSystem implements _HassUnitSystem {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HassUnitSystem &&
-            const DeepCollectionEquality().equals(other.length, length) &&
-            const DeepCollectionEquality().equals(other.mass, mass) &&
-            const DeepCollectionEquality()
-                .equals(other.temperature, temperature) &&
-            const DeepCollectionEquality().equals(other.volume, volume));
+            (identical(other.length, length) || other.length == length) &&
+            (identical(other.mass, mass) || other.mass == mass) &&
+            (identical(other.temperature, temperature) ||
+                other.temperature == temperature) &&
+            (identical(other.volume, volume) || other.volume == volume));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(length),
-      const DeepCollectionEquality().hash(mass),
-      const DeepCollectionEquality().hash(temperature),
-      const DeepCollectionEquality().hash(volume));
+  int get hashCode =>
+      Object.hash(runtimeType, length, mass, temperature, volume);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HassUnitSystemCopyWith<_$_HassUnitSystem> get copyWith =>
       __$$_HassUnitSystemCopyWithImpl<_$_HassUnitSystem>(this, _$identity);
 

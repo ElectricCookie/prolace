@@ -129,7 +129,7 @@ class ChipsCard extends ViewModelWidget<HomeModel> {
                       entity: viewModel.getEntityById(e.entity ?? "")),
                   size: 16,
                 ),
-                label: Text(viewModel.getStateName(e.entity!)),
+                label: Text(viewModel.getStateName(e.entity ?? "")),
               ))
           .toList(),
     );

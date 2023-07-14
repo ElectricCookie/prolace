@@ -65,15 +65,18 @@ class SetupModel extends FormViewModel {
       if (res.statusCode == 200 &&
           res.body.contains("<title>Home Assistant</title>")) {
         _settingsService.internalUrl = address;
+
         _navigationService.navigateTo(Routes.authView);
 
         return;
       }
-    } catch (e) {}
-    _dialogService.showDialog(
-      title: "Error",
-      description:
-          "Could not connect to $address or is not a Home Assistant instance",
-    );
+    } catch (e) {
+      print(e);
+      _dialogService.showDialog(
+        title: "Error",
+        description:
+            "Could not connect to $address or is not a Home Assistant instance",
+      );
+    }
   }
 }

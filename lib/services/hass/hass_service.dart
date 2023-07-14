@@ -13,7 +13,7 @@ import '../settings/settings_service.dart';
 import 'message.dart';
 import 'models/entity.dart';
 
-class HassService with ReactiveServiceMixin {
+class HassService with ListenableServiceMixin {
   // Settings service
   final SettingsService _settingsService = locator<SettingsService>();
   final AuthService _authService = locator<AuthService>();

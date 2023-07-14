@@ -21,11 +21,7 @@ class LoadingModel extends ReactiveViewModel {
     if (_settingsService.internalUrl == null) {
       _navigationService.navigateTo(Routes.setupView);
     } else {
-      await _authService.init(
-          address: _settingsService.internalUrl!,
-          redirectUrl: "com.example.prolace://login-callback",
-          clientId: "https://electriccookie.github.io/prolace/",
-          scopes: []);
+      await _authService.init();
 
       if (_authService.isLoggedIn) {
         _navigationService.replaceWith(Routes.homeView);

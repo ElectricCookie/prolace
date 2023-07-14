@@ -6,6 +6,7 @@ import 'package:home_portal/services/hass/models/lovelace.dart';
 import 'package:home_portal/views/screens/home/home_model.dart';
 import 'package:home_portal/views/screens/home/lovelace/lovelace_page.dart';
 import 'package:home_portal/views/screens/home/lovelace/time.dart';
+import 'package:home_portal/views/screens/mirror/mirror_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -39,55 +40,78 @@ class LovelaceWrapper extends HookViewModelWidget<HomeModel> {
       ));
     }
 
-    return AnimatedSwitcher(
-      duration: const Duration(seconds: 1),
-      child: viewModel.screenOn
-          ? DynamicTabBar(
-              initialIndex: viewModel.likelyView,
-              tabs: viewModel.lovelaceViews
-                  .where(
-                    (element) => element.visible?.isEmpty != true,
-                  )
-                  .map((view) => BottomNavigationBarItem(
-                      backgroundColor: Colors.grey.shade900,
-                      label: view.title ?? "",
-                      icon: Icon(getIcon(view.icon ?? ""))))
-                  .toList(),
-              children: viewModel.lovelaceViews
-                  .map((view) => LovelacePage(view))
-                  .toList(),
+    if (!viewModel.screenOn) {
+      return GestureDetector(
+          onTap: () {
+            viewModel.wake();
+          },
+          child: Scaffold(
+            body: Center(
+                child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const DefaultTextStyle(
+                      style: TextStyle(fontSize: 32, color: Colors.white),
+                      child: TimeView()),
+                  const SizedBox(height: 16),
+                  ...viewModel.screenSaverEntities
+                      .map(
+                        (e) => CardView(
+                          LovelaceCard(
+                              entity: e, type: "custom:mushroom-entity-card"),
+                          onScreenSaver: true,
+                        ),
+                      )
+                      .toList(),
+                ],
+              ),
+            )),
+          ));
+    }
+
+    if (viewModel.allowNavigation) {
+      return DynamicTabBar(
+        initialIndex: viewModel.likelyView,
+        tabs: viewModel.lovelaceViews
+            .where(
+              (element) => element.visible?.isEmpty != true,
             )
-          : GestureDetector(
-              onTap: () {
-                viewModel.wake();
-              },
-              child: Scaffold(
-                body: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const DefaultTextStyle(
-                          style: TextStyle(fontSize: 32, color: Colors.white),
-                          child: TimeView()),
-                      const SizedBox(height: 16),
-                      ...viewModel.screenSaverEntities
-                          .map(
-                            (e) => CardView(
-                              LovelaceCard(
-                                  entity: e,
-                                  type: "custom:mushroom-entity-card"),
-                              onScreenSaver: true,
-                            ),
-                          )
-                          .toList(),
-                    ],
-                  ),
-                )),
-              )),
-    );
+            .map((view) => BottomNavigationBarItem(
+                backgroundColor: Colors.grey.shade900,
+                label: view.title ?? "",
+                icon: Icon(getIcon(view.icon ?? ""))))
+            .toList(),
+        children:
+            viewModel.lovelaceViews.map((view) => LovelacePage(view)).toList(),
+      );
+    } else {
+      if (viewModel.isMirror) {
+        return MirrorView();
+      }
+
+      return Scaffold(
+          appBar: buildHomeAppbar(context),
+          body: LovelacePage(viewModel.pinnedView));
+    }
   }
+}
+
+buildHomeAppbar(BuildContext context) {
+  return AppBar(
+    elevation: 1,
+    title: const TimeView(),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.settings),
+        onPressed: () {
+          var navigationService = locator<NavigationService>();
+          navigationService.navigateTo(Routes.settingsView);
+        },
+      )
+    ],
+  );
 }
 
 class DynamicTabBar extends StatefulWidget {
@@ -144,21 +168,10 @@ class _DynamicTabBarState extends State<DynamicTabBar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 1,
-        title: const TimeView(),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              var navigationService = locator<NavigationService>();
-              navigationService.navigateTo(Routes.settingsView);
-            },
-          )
-        ],
-      ),
+      appBar: buildHomeAppbar(context),
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.grey.shade400,
+        unselectedItemColor: Colors.grey.shade200,
+        selectedItemColor: Colors.white,
         items: widget.tabs,
         currentIndex: _tabController.hasClients
             ? _tabController.page?.round() ?? 0

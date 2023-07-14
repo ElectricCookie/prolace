@@ -32,45 +32,50 @@ mixin _$HassEvent {
 /// @nodoc
 abstract class $HassEventCopyWith<$Res> {
   factory $HassEventCopyWith(HassEvent value, $Res Function(HassEvent) then) =
-      _$HassEventCopyWithImpl<$Res>;
+      _$HassEventCopyWithImpl<$Res, HassEvent>;
+  @useResult
   $Res call({String? eventType, HassEventData? data});
 
   $HassEventDataCopyWith<$Res>? get data;
 }
 
 /// @nodoc
-class _$HassEventCopyWithImpl<$Res> implements $HassEventCopyWith<$Res> {
+class _$HassEventCopyWithImpl<$Res, $Val extends HassEvent>
+    implements $HassEventCopyWith<$Res> {
   _$HassEventCopyWithImpl(this._value, this._then);
 
-  final HassEvent _value;
   // ignore: unused_field
-  final $Res Function(HassEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? eventType = freezed,
     Object? data = freezed,
   }) {
     return _then(_value.copyWith(
-      eventType: eventType == freezed
+      eventType: freezed == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
               as String?,
-      data: data == freezed
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as HassEventData?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $HassEventDataCopyWith<$Res>? get data {
     if (_value.data == null) {
       return null;
     }
 
     return $HassEventDataCopyWith<$Res>(_value.data!, (value) {
-      return _then(_value.copyWith(data: value));
+      return _then(_value.copyWith(data: value) as $Val);
     });
   }
 }
@@ -81,6 +86,7 @@ abstract class _$$_HassEventCopyWith<$Res> implements $HassEventCopyWith<$Res> {
           _$_HassEvent value, $Res Function(_$_HassEvent) then) =
       __$$_HassEventCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? eventType, HassEventData? data});
 
   @override
@@ -88,26 +94,25 @@ abstract class _$$_HassEventCopyWith<$Res> implements $HassEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_HassEventCopyWithImpl<$Res> extends _$HassEventCopyWithImpl<$Res>
+class __$$_HassEventCopyWithImpl<$Res>
+    extends _$HassEventCopyWithImpl<$Res, _$_HassEvent>
     implements _$$_HassEventCopyWith<$Res> {
   __$$_HassEventCopyWithImpl(
       _$_HassEvent _value, $Res Function(_$_HassEvent) _then)
-      : super(_value, (v) => _then(v as _$_HassEvent));
+      : super(_value, _then);
 
-  @override
-  _$_HassEvent get _value => super._value as _$_HassEvent;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? eventType = freezed,
     Object? data = freezed,
   }) {
     return _then(_$_HassEvent(
-      eventType: eventType == freezed
+      eventType: freezed == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
               as String?,
-      data: data == freezed
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as HassEventData?,
@@ -139,19 +144,18 @@ class _$_HassEvent implements _HassEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HassEvent &&
-            const DeepCollectionEquality().equals(other.eventType, eventType) &&
-            const DeepCollectionEquality().equals(other.data, data));
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(eventType),
-      const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(runtimeType, eventType, data);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HassEventCopyWith<_$_HassEvent> get copyWith =>
       __$$_HassEventCopyWithImpl<_$_HassEvent>(this, _$identity);
 
@@ -200,7 +204,8 @@ mixin _$HassEventData {
 abstract class $HassEventDataCopyWith<$Res> {
   factory $HassEventDataCopyWith(
           HassEventData value, $Res Function(HassEventData) then) =
-      _$HassEventDataCopyWithImpl<$Res>;
+      _$HassEventDataCopyWithImpl<$Res, HassEventData>;
+  @useResult
   $Res call({String? entityId, HassState? newState, HassState? oldState});
 
   $HassStateCopyWith<$Res>? get newState;
@@ -208,14 +213,16 @@ abstract class $HassEventDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HassEventDataCopyWithImpl<$Res>
+class _$HassEventDataCopyWithImpl<$Res, $Val extends HassEventData>
     implements $HassEventDataCopyWith<$Res> {
   _$HassEventDataCopyWithImpl(this._value, this._then);
 
-  final HassEventData _value;
   // ignore: unused_field
-  final $Res Function(HassEventData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? entityId = freezed,
@@ -223,40 +230,42 @@ class _$HassEventDataCopyWithImpl<$Res>
     Object? oldState = freezed,
   }) {
     return _then(_value.copyWith(
-      entityId: entityId == freezed
+      entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String?,
-      newState: newState == freezed
+      newState: freezed == newState
           ? _value.newState
           : newState // ignore: cast_nullable_to_non_nullable
               as HassState?,
-      oldState: oldState == freezed
+      oldState: freezed == oldState
           ? _value.oldState
           : oldState // ignore: cast_nullable_to_non_nullable
               as HassState?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $HassStateCopyWith<$Res>? get newState {
     if (_value.newState == null) {
       return null;
     }
 
     return $HassStateCopyWith<$Res>(_value.newState!, (value) {
-      return _then(_value.copyWith(newState: value));
+      return _then(_value.copyWith(newState: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $HassStateCopyWith<$Res>? get oldState {
     if (_value.oldState == null) {
       return null;
     }
 
     return $HassStateCopyWith<$Res>(_value.oldState!, (value) {
-      return _then(_value.copyWith(oldState: value));
+      return _then(_value.copyWith(oldState: value) as $Val);
     });
   }
 }
@@ -268,6 +277,7 @@ abstract class _$$_HassEventDataCopyWith<$Res>
           _$_HassEventData value, $Res Function(_$_HassEventData) then) =
       __$$_HassEventDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? entityId, HassState? newState, HassState? oldState});
 
   @override
@@ -278,15 +288,13 @@ abstract class _$$_HassEventDataCopyWith<$Res>
 
 /// @nodoc
 class __$$_HassEventDataCopyWithImpl<$Res>
-    extends _$HassEventDataCopyWithImpl<$Res>
+    extends _$HassEventDataCopyWithImpl<$Res, _$_HassEventData>
     implements _$$_HassEventDataCopyWith<$Res> {
   __$$_HassEventDataCopyWithImpl(
       _$_HassEventData _value, $Res Function(_$_HassEventData) _then)
-      : super(_value, (v) => _then(v as _$_HassEventData));
+      : super(_value, _then);
 
-  @override
-  _$_HassEventData get _value => super._value as _$_HassEventData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? entityId = freezed,
@@ -294,15 +302,15 @@ class __$$_HassEventDataCopyWithImpl<$Res>
     Object? oldState = freezed,
   }) {
     return _then(_$_HassEventData(
-      entityId: entityId == freezed
+      entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String?,
-      newState: newState == freezed
+      newState: freezed == newState
           ? _value.newState
           : newState // ignore: cast_nullable_to_non_nullable
               as HassState?,
-      oldState: oldState == freezed
+      oldState: freezed == oldState
           ? _value.oldState
           : oldState // ignore: cast_nullable_to_non_nullable
               as HassState?,
@@ -336,21 +344,21 @@ class _$_HassEventData implements _HassEventData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HassEventData &&
-            const DeepCollectionEquality().equals(other.entityId, entityId) &&
-            const DeepCollectionEquality().equals(other.newState, newState) &&
-            const DeepCollectionEquality().equals(other.oldState, oldState));
+            (identical(other.entityId, entityId) ||
+                other.entityId == entityId) &&
+            (identical(other.newState, newState) ||
+                other.newState == newState) &&
+            (identical(other.oldState, oldState) ||
+                other.oldState == oldState));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(entityId),
-      const DeepCollectionEquality().hash(newState),
-      const DeepCollectionEquality().hash(oldState));
+  int get hashCode => Object.hash(runtimeType, entityId, newState, oldState);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HassEventDataCopyWith<_$_HassEventData> get copyWith =>
       __$$_HassEventDataCopyWithImpl<_$_HassEventData>(this, _$identity);
 

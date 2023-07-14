@@ -23,6 +23,7 @@ mixin _$LovelaceView {
   String? get theme => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   List<String>? get visible => throw _privateConstructorUsedError;
+  String? get path => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   List<LovelaceCard>? get cards => throw _privateConstructorUsedError;
@@ -37,59 +38,69 @@ mixin _$LovelaceView {
 abstract class $LovelaceViewCopyWith<$Res> {
   factory $LovelaceViewCopyWith(
           LovelaceView value, $Res Function(LovelaceView) then) =
-      _$LovelaceViewCopyWithImpl<$Res>;
+      _$LovelaceViewCopyWithImpl<$Res, LovelaceView>;
+  @useResult
   $Res call(
       {String? theme,
       String? title,
       List<String>? visible,
+      String? path,
       String? icon,
       String? type,
       List<LovelaceCard>? cards});
 }
 
 /// @nodoc
-class _$LovelaceViewCopyWithImpl<$Res> implements $LovelaceViewCopyWith<$Res> {
+class _$LovelaceViewCopyWithImpl<$Res, $Val extends LovelaceView>
+    implements $LovelaceViewCopyWith<$Res> {
   _$LovelaceViewCopyWithImpl(this._value, this._then);
 
-  final LovelaceView _value;
   // ignore: unused_field
-  final $Res Function(LovelaceView) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? theme = freezed,
     Object? title = freezed,
     Object? visible = freezed,
+    Object? path = freezed,
     Object? icon = freezed,
     Object? type = freezed,
     Object? cards = freezed,
   }) {
     return _then(_value.copyWith(
-      theme: theme == freezed
+      theme: freezed == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as String?,
-      title: title == freezed
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      visible: visible == freezed
+      visible: freezed == visible
           ? _value.visible
           : visible // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      icon: icon == freezed
+      path: freezed == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String?,
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      cards: cards == freezed
+      cards: freezed == cards
           ? _value.cards
           : cards // ignore: cast_nullable_to_non_nullable
               as List<LovelaceCard>?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -100,10 +111,12 @@ abstract class _$$_LovelaceViewCopyWith<$Res>
           _$_LovelaceView value, $Res Function(_$_LovelaceView) then) =
       __$$_LovelaceViewCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? theme,
       String? title,
       List<String>? visible,
+      String? path,
       String? icon,
       String? type,
       List<LovelaceCard>? cards});
@@ -111,46 +124,49 @@ abstract class _$$_LovelaceViewCopyWith<$Res>
 
 /// @nodoc
 class __$$_LovelaceViewCopyWithImpl<$Res>
-    extends _$LovelaceViewCopyWithImpl<$Res>
+    extends _$LovelaceViewCopyWithImpl<$Res, _$_LovelaceView>
     implements _$$_LovelaceViewCopyWith<$Res> {
   __$$_LovelaceViewCopyWithImpl(
       _$_LovelaceView _value, $Res Function(_$_LovelaceView) _then)
-      : super(_value, (v) => _then(v as _$_LovelaceView));
+      : super(_value, _then);
 
-  @override
-  _$_LovelaceView get _value => super._value as _$_LovelaceView;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? theme = freezed,
     Object? title = freezed,
     Object? visible = freezed,
+    Object? path = freezed,
     Object? icon = freezed,
     Object? type = freezed,
     Object? cards = freezed,
   }) {
     return _then(_$_LovelaceView(
-      theme: theme == freezed
+      theme: freezed == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
               as String?,
-      title: title == freezed
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      visible: visible == freezed
+      visible: freezed == visible
           ? _value._visible
           : visible // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      icon: icon == freezed
+      path: freezed == path
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String?,
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      cards: cards == freezed
+      cards: freezed == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
               as List<LovelaceCard>?,
@@ -166,6 +182,7 @@ class _$_LovelaceView implements _LovelaceView {
       {this.theme,
       this.title,
       final List<String>? visible,
+      this.path,
       this.icon,
       this.type,
       final List<LovelaceCard>? cards})
@@ -189,6 +206,8 @@ class _$_LovelaceView implements _LovelaceView {
   }
 
   @override
+  final String? path;
+  @override
   final String? icon;
   @override
   final String? type;
@@ -203,7 +222,7 @@ class _$_LovelaceView implements _LovelaceView {
 
   @override
   String toString() {
-    return 'LovelaceView(theme: $theme, title: $title, visible: $visible, icon: $icon, type: $type, cards: $cards)';
+    return 'LovelaceView(theme: $theme, title: $title, visible: $visible, path: $path, icon: $icon, type: $type, cards: $cards)';
   }
 
   @override
@@ -211,11 +230,12 @@ class _$_LovelaceView implements _LovelaceView {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LovelaceView &&
-            const DeepCollectionEquality().equals(other.theme, theme) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
+            (identical(other.theme, theme) || other.theme == theme) &&
+            (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._visible, _visible) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
+            (identical(other.path, path) || other.path == path) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality().equals(other._cards, _cards));
   }
 
@@ -223,15 +243,17 @@ class _$_LovelaceView implements _LovelaceView {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(theme),
-      const DeepCollectionEquality().hash(title),
+      theme,
+      title,
       const DeepCollectionEquality().hash(_visible),
-      const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(type),
+      path,
+      icon,
+      type,
       const DeepCollectionEquality().hash(_cards));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LovelaceViewCopyWith<_$_LovelaceView> get copyWith =>
       __$$_LovelaceViewCopyWithImpl<_$_LovelaceView>(this, _$identity);
 
@@ -248,6 +270,7 @@ abstract class _LovelaceView implements LovelaceView {
       {final String? theme,
       final String? title,
       final List<String>? visible,
+      final String? path,
       final String? icon,
       final String? type,
       final List<LovelaceCard>? cards}) = _$_LovelaceView;
@@ -261,6 +284,8 @@ abstract class _LovelaceView implements LovelaceView {
   String? get title;
   @override
   List<String>? get visible;
+  @override
+  String? get path;
   @override
   String? get icon;
   @override
@@ -303,7 +328,8 @@ mixin _$LovelaceCard {
 abstract class $LovelaceCardCopyWith<$Res> {
   factory $LovelaceCardCopyWith(
           LovelaceCard value, $Res Function(LovelaceCard) then) =
-      _$LovelaceCardCopyWithImpl<$Res>;
+      _$LovelaceCardCopyWithImpl<$Res, LovelaceCard>;
+  @useResult
   $Res call(
       {String? type,
       String? title,
@@ -321,13 +347,16 @@ abstract class $LovelaceCardCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LovelaceCardCopyWithImpl<$Res> implements $LovelaceCardCopyWith<$Res> {
+class _$LovelaceCardCopyWithImpl<$Res, $Val extends LovelaceCard>
+    implements $LovelaceCardCopyWith<$Res> {
   _$LovelaceCardCopyWithImpl(this._value, this._then);
 
-  final LovelaceCard _value;
   // ignore: unused_field
-  final $Res Function(LovelaceCard) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? type = freezed,
@@ -345,59 +374,59 @@ class _$LovelaceCardCopyWithImpl<$Res> implements $LovelaceCardCopyWith<$Res> {
     Object? iconColor = freezed,
   }) {
     return _then(_value.copyWith(
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      title: title == freezed
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      cards: cards == freezed
+      cards: freezed == cards
           ? _value.cards
           : cards // ignore: cast_nullable_to_non_nullable
               as List<LovelaceCard>?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: icon == freezed
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      entity: entity == freezed
+      entity: freezed == entity
           ? _value.entity
           : entity // ignore: cast_nullable_to_non_nullable
               as String?,
-      entities: entities == freezed
+      entities: freezed == entities
           ? _value.entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      chips: chips == freezed
+      chips: freezed == chips
           ? _value.chips
           : chips // ignore: cast_nullable_to_non_nullable
               as List<MushroomChip>?,
-      primaryInfo: primaryInfo == freezed
+      primaryInfo: freezed == primaryInfo
           ? _value.primaryInfo
           : primaryInfo // ignore: cast_nullable_to_non_nullable
               as String?,
-      square: square == freezed
+      square: freezed == square
           ? _value.square
           : square // ignore: cast_nullable_to_non_nullable
               as bool?,
-      columns: columns == freezed
+      columns: freezed == columns
           ? _value.columns
           : columns // ignore: cast_nullable_to_non_nullable
               as int?,
-      secondaryInfo: secondaryInfo == freezed
+      secondaryInfo: freezed == secondaryInfo
           ? _value.secondaryInfo
           : secondaryInfo // ignore: cast_nullable_to_non_nullable
               as String?,
-      iconColor: iconColor == freezed
+      iconColor: freezed == iconColor
           ? _value.iconColor
           : iconColor // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -408,6 +437,7 @@ abstract class _$$_LovelaceCardCopyWith<$Res>
           _$_LovelaceCard value, $Res Function(_$_LovelaceCard) then) =
       __$$_LovelaceCardCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? type,
       String? title,
@@ -426,15 +456,13 @@ abstract class _$$_LovelaceCardCopyWith<$Res>
 
 /// @nodoc
 class __$$_LovelaceCardCopyWithImpl<$Res>
-    extends _$LovelaceCardCopyWithImpl<$Res>
+    extends _$LovelaceCardCopyWithImpl<$Res, _$_LovelaceCard>
     implements _$$_LovelaceCardCopyWith<$Res> {
   __$$_LovelaceCardCopyWithImpl(
       _$_LovelaceCard _value, $Res Function(_$_LovelaceCard) _then)
-      : super(_value, (v) => _then(v as _$_LovelaceCard));
+      : super(_value, _then);
 
-  @override
-  _$_LovelaceCard get _value => super._value as _$_LovelaceCard;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? type = freezed,
@@ -452,55 +480,55 @@ class __$$_LovelaceCardCopyWithImpl<$Res>
     Object? iconColor = freezed,
   }) {
     return _then(_$_LovelaceCard(
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      title: title == freezed
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      cards: cards == freezed
+      cards: freezed == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
               as List<LovelaceCard>?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: icon == freezed
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      entity: entity == freezed
+      entity: freezed == entity
           ? _value.entity
           : entity // ignore: cast_nullable_to_non_nullable
               as String?,
-      entities: entities == freezed
+      entities: freezed == entities
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      chips: chips == freezed
+      chips: freezed == chips
           ? _value._chips
           : chips // ignore: cast_nullable_to_non_nullable
               as List<MushroomChip>?,
-      primaryInfo: primaryInfo == freezed
+      primaryInfo: freezed == primaryInfo
           ? _value.primaryInfo
           : primaryInfo // ignore: cast_nullable_to_non_nullable
               as String?,
-      square: square == freezed
+      square: freezed == square
           ? _value.square
           : square // ignore: cast_nullable_to_non_nullable
               as bool?,
-      columns: columns == freezed
+      columns: freezed == columns
           ? _value.columns
           : columns // ignore: cast_nullable_to_non_nullable
               as int?,
-      secondaryInfo: secondaryInfo == freezed
+      secondaryInfo: freezed == secondaryInfo
           ? _value.secondaryInfo
           : secondaryInfo // ignore: cast_nullable_to_non_nullable
               as String?,
-      iconColor: iconColor == freezed
+      iconColor: freezed == iconColor
           ? _value.iconColor
           : iconColor // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -591,43 +619,45 @@ class _$_LovelaceCard implements _LovelaceCard {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LovelaceCard &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._cards, _cards) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.entity, entity) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.entity, entity) || other.entity == entity) &&
             const DeepCollectionEquality().equals(other._entities, _entities) &&
             const DeepCollectionEquality().equals(other._chips, _chips) &&
-            const DeepCollectionEquality()
-                .equals(other.primaryInfo, primaryInfo) &&
-            const DeepCollectionEquality().equals(other.square, square) &&
-            const DeepCollectionEquality().equals(other.columns, columns) &&
-            const DeepCollectionEquality()
-                .equals(other.secondaryInfo, secondaryInfo) &&
-            const DeepCollectionEquality().equals(other.iconColor, iconColor));
+            (identical(other.primaryInfo, primaryInfo) ||
+                other.primaryInfo == primaryInfo) &&
+            (identical(other.square, square) || other.square == square) &&
+            (identical(other.columns, columns) || other.columns == columns) &&
+            (identical(other.secondaryInfo, secondaryInfo) ||
+                other.secondaryInfo == secondaryInfo) &&
+            (identical(other.iconColor, iconColor) ||
+                other.iconColor == iconColor));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(title),
+      type,
+      title,
       const DeepCollectionEquality().hash(_cards),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(entity),
+      name,
+      icon,
+      entity,
       const DeepCollectionEquality().hash(_entities),
       const DeepCollectionEquality().hash(_chips),
-      const DeepCollectionEquality().hash(primaryInfo),
-      const DeepCollectionEquality().hash(square),
-      const DeepCollectionEquality().hash(columns),
-      const DeepCollectionEquality().hash(secondaryInfo),
-      const DeepCollectionEquality().hash(iconColor));
+      primaryInfo,
+      square,
+      columns,
+      secondaryInfo,
+      iconColor);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LovelaceCardCopyWith<_$_LovelaceCard> get copyWith =>
       __$$_LovelaceCardCopyWithImpl<_$_LovelaceCard>(this, _$identity);
 
@@ -711,18 +741,22 @@ mixin _$MushroomChip {
 abstract class $MushroomChipCopyWith<$Res> {
   factory $MushroomChipCopyWith(
           MushroomChip value, $Res Function(MushroomChip) then) =
-      _$MushroomChipCopyWithImpl<$Res>;
+      _$MushroomChipCopyWithImpl<$Res, MushroomChip>;
+  @useResult
   $Res call({String? icon, String? name, String? entity, String? contentInfo});
 }
 
 /// @nodoc
-class _$MushroomChipCopyWithImpl<$Res> implements $MushroomChipCopyWith<$Res> {
+class _$MushroomChipCopyWithImpl<$Res, $Val extends MushroomChip>
+    implements $MushroomChipCopyWith<$Res> {
   _$MushroomChipCopyWithImpl(this._value, this._then);
 
-  final MushroomChip _value;
   // ignore: unused_field
-  final $Res Function(MushroomChip) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? icon = freezed,
@@ -731,23 +765,23 @@ class _$MushroomChipCopyWithImpl<$Res> implements $MushroomChipCopyWith<$Res> {
     Object? contentInfo = freezed,
   }) {
     return _then(_value.copyWith(
-      icon: icon == freezed
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      entity: entity == freezed
+      entity: freezed == entity
           ? _value.entity
           : entity // ignore: cast_nullable_to_non_nullable
               as String?,
-      contentInfo: contentInfo == freezed
+      contentInfo: freezed == contentInfo
           ? _value.contentInfo
           : contentInfo // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -758,20 +792,19 @@ abstract class _$$_MushroomChipCopyWith<$Res>
           _$_MushroomChip value, $Res Function(_$_MushroomChip) then) =
       __$$_MushroomChipCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? icon, String? name, String? entity, String? contentInfo});
 }
 
 /// @nodoc
 class __$$_MushroomChipCopyWithImpl<$Res>
-    extends _$MushroomChipCopyWithImpl<$Res>
+    extends _$MushroomChipCopyWithImpl<$Res, _$_MushroomChip>
     implements _$$_MushroomChipCopyWith<$Res> {
   __$$_MushroomChipCopyWithImpl(
       _$_MushroomChip _value, $Res Function(_$_MushroomChip) _then)
-      : super(_value, (v) => _then(v as _$_MushroomChip));
+      : super(_value, _then);
 
-  @override
-  _$_MushroomChip get _value => super._value as _$_MushroomChip;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? icon = freezed,
@@ -780,19 +813,19 @@ class __$$_MushroomChipCopyWithImpl<$Res>
     Object? contentInfo = freezed,
   }) {
     return _then(_$_MushroomChip(
-      icon: icon == freezed
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      entity: entity == freezed
+      entity: freezed == entity
           ? _value.entity
           : entity // ignore: cast_nullable_to_non_nullable
               as String?,
-      contentInfo: contentInfo == freezed
+      contentInfo: freezed == contentInfo
           ? _value.contentInfo
           : contentInfo // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -828,24 +861,20 @@ class _$_MushroomChip implements _MushroomChip {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MushroomChip &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.entity, entity) &&
-            const DeepCollectionEquality()
-                .equals(other.contentInfo, contentInfo));
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.entity, entity) || other.entity == entity) &&
+            (identical(other.contentInfo, contentInfo) ||
+                other.contentInfo == contentInfo));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(entity),
-      const DeepCollectionEquality().hash(contentInfo));
+  int get hashCode => Object.hash(runtimeType, icon, name, entity, contentInfo);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MushroomChipCopyWith<_$_MushroomChip> get copyWith =>
       __$$_MushroomChipCopyWithImpl<_$_MushroomChip>(this, _$identity);
 

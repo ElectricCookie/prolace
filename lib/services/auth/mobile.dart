@@ -3,7 +3,7 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'oauth_handler.dart';
 import 'oauth_token_result.dart';
 
-class MobileAuth with OAuthHandler {
+class MobileAuth extends OAuthHandler {
   final String address;
   final String clientId;
   final String redirectUrl;

@@ -1,16 +1,19 @@
 import 'package:home_portal/services/hass/models/entity.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../services/hass/hass_service.dart';
 import '../../../services/settings/settings_service.dart';
 
 class SettingsModel extends ReactiveViewModel {
   final _settingsService = locator<SettingsService>();
   final _hassService = locator<HassService>();
+  final _navigationService = locator<NavigationService>();
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices =>
+  List<ListenableServiceMixin> get listenableServices =>
       [_settingsService, _hassService];
 
   List<Entity> get entities => _hassService.entities;
@@ -22,6 +25,26 @@ class SettingsModel extends ReactiveViewModel {
   bool get screenSaverEnabled => _settingsService.screenSaverEnabled;
 
   List<String> get screenSaverEntities => _settingsService.screenSaverEntities;
+
+  bool get allowNavigation => _settingsService.allowNavigation;
+
+  String get pinnedView => _settingsService.pinnedView;
+
+  void onChoosePinnedView() async {
+    var view = await _navigationService.navigateTo(Routes.viewSelectorView,
+        arguments: ViewSelectorViewArguments(currentSelectedPath: pinnedView));
+    if (view != null) {
+      setPinnedView(view);
+    }
+  }
+
+  void setPinnedView(String view) {
+    _settingsService.pinnedView = view;
+  }
+
+  void setAllowNavigation(bool allow) {
+    _settingsService.allowNavigation = allow;
+  }
 
   void setInternalUrl(String? url) {
     _settingsService.internalUrl = url;

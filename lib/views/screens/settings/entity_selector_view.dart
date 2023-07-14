@@ -11,7 +11,7 @@ class EntitySelectorModel extends ReactiveViewModel {
   EntitySelectorModel({required this.selected});
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_hassService];
+  List<ListenableServiceMixin> get listenableServices => [_hassService];
 
   final _hassService = locator<HassService>();
 

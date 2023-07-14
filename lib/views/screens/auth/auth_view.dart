@@ -46,6 +46,10 @@ class AuthView extends StatelessWidget with $AuthView {
                       decoration: const InputDecoration(
                           label: Text("Long lived access token")),
                     ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                        onPressed: model.loginWithToken,
+                        child: const Text("Login with access token")),
                   ]),
             ));
   }

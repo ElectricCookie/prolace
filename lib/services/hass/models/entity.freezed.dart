@@ -35,7 +35,8 @@ mixin _$Entity {
 /// @nodoc
 abstract class $EntityCopyWith<$Res> {
   factory $EntityCopyWith(Entity value, $Res Function(Entity) then) =
-      _$EntityCopyWithImpl<$Res>;
+      _$EntityCopyWithImpl<$Res, Entity>;
+  @useResult
   $Res call(
       {String? areaId,
       String? configEntryId,
@@ -46,13 +47,16 @@ abstract class $EntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EntityCopyWithImpl<$Res> implements $EntityCopyWith<$Res> {
+class _$EntityCopyWithImpl<$Res, $Val extends Entity>
+    implements $EntityCopyWith<$Res> {
   _$EntityCopyWithImpl(this._value, this._then);
 
-  final Entity _value;
   // ignore: unused_field
-  final $Res Function(Entity) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? areaId = freezed,
@@ -63,31 +67,31 @@ class _$EntityCopyWithImpl<$Res> implements $EntityCopyWith<$Res> {
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      areaId: areaId == freezed
+      areaId: freezed == areaId
           ? _value.areaId
           : areaId // ignore: cast_nullable_to_non_nullable
               as String?,
-      configEntryId: configEntryId == freezed
+      configEntryId: freezed == configEntryId
           ? _value.configEntryId
           : configEntryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceId: deviceId == freezed
+      deviceId: freezed == deviceId
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: icon == freezed
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      entityId: entityId == freezed
+      entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -96,6 +100,7 @@ abstract class _$$_EntityCopyWith<$Res> implements $EntityCopyWith<$Res> {
   factory _$$_EntityCopyWith(_$_Entity value, $Res Function(_$_Entity) then) =
       __$$_EntityCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? areaId,
       String? configEntryId,
@@ -106,14 +111,13 @@ abstract class _$$_EntityCopyWith<$Res> implements $EntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_EntityCopyWithImpl<$Res> extends _$EntityCopyWithImpl<$Res>
+class __$$_EntityCopyWithImpl<$Res>
+    extends _$EntityCopyWithImpl<$Res, _$_Entity>
     implements _$$_EntityCopyWith<$Res> {
   __$$_EntityCopyWithImpl(_$_Entity _value, $Res Function(_$_Entity) _then)
-      : super(_value, (v) => _then(v as _$_Entity));
+      : super(_value, _then);
 
-  @override
-  _$_Entity get _value => super._value as _$_Entity;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? areaId = freezed,
@@ -124,27 +128,27 @@ class __$$_EntityCopyWithImpl<$Res> extends _$EntityCopyWithImpl<$Res>
     Object? name = freezed,
   }) {
     return _then(_$_Entity(
-      areaId: areaId == freezed
+      areaId: freezed == areaId
           ? _value.areaId
           : areaId // ignore: cast_nullable_to_non_nullable
               as String?,
-      configEntryId: configEntryId == freezed
+      configEntryId: freezed == configEntryId
           ? _value.configEntryId
           : configEntryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceId: deviceId == freezed
+      deviceId: freezed == deviceId
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: icon == freezed
+      icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      entityId: entityId == freezed
+      entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -190,28 +194,25 @@ class _$_Entity implements _Entity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Entity &&
-            const DeepCollectionEquality().equals(other.areaId, areaId) &&
-            const DeepCollectionEquality()
-                .equals(other.configEntryId, configEntryId) &&
-            const DeepCollectionEquality().equals(other.deviceId, deviceId) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.entityId, entityId) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.areaId, areaId) || other.areaId == areaId) &&
+            (identical(other.configEntryId, configEntryId) ||
+                other.configEntryId == configEntryId) &&
+            (identical(other.deviceId, deviceId) ||
+                other.deviceId == deviceId) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.entityId, entityId) ||
+                other.entityId == entityId) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(areaId),
-      const DeepCollectionEquality().hash(configEntryId),
-      const DeepCollectionEquality().hash(deviceId),
-      const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(entityId),
-      const DeepCollectionEquality().hash(name));
+      runtimeType, areaId, configEntryId, deviceId, icon, entityId, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EntityCopyWith<_$_Entity> get copyWith =>
       __$$_EntityCopyWithImpl<_$_Entity>(this, _$identity);
 

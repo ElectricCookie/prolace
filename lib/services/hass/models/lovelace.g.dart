@@ -12,6 +12,7 @@ _$_LovelaceView _$$_LovelaceViewFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String?,
       visible:
           (json['visible'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      path: json['path'] as String?,
       icon: json['icon'] as String?,
       type: json['type'] as String?,
       cards: (json['cards'] as List<dynamic>?)
@@ -24,6 +25,7 @@ Map<String, dynamic> _$$_LovelaceViewToJson(_$_LovelaceView instance) =>
       'theme': instance.theme,
       'title': instance.title,
       'visible': instance.visible,
+      'path': instance.path,
       'icon': instance.icon,
       'type': instance.type,
       'cards': instance.cards,

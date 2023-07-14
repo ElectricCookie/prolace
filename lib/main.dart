@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,15 +34,15 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: light.copyWith(
           appBarTheme: AppBarTheme(
-              backgroundColor: light.colorScheme.background,
-              foregroundColor: light.colorScheme.onBackground,
-              brightness: Brightness.dark)),
+        backgroundColor: light.colorScheme.background,
+        foregroundColor: light.colorScheme.onBackground,
+      )),
       // Same definition for the dark theme, but using FlexThemeData.dark().
       darkTheme: dark.copyWith(
           appBarTheme: AppBarTheme(
-              backgroundColor: dark.colorScheme.background,
-              foregroundColor: dark.colorScheme.onBackground,
-              brightness: Brightness.dark)),
+        backgroundColor: dark.colorScheme.background,
+        foregroundColor: dark.colorScheme.onBackground,
+      )),
       // Use the above dark or light theme based on active themeMode.
       themeMode: themeMode,
       initialRoute: Routes.loadingView,

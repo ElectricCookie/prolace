@@ -11,7 +11,7 @@ class Message {
   String? haVersion;
   Map<String, dynamic>? serviceData;
   Map<String, dynamic>? target;
-  dynamic? result;
+  dynamic result;
   HassEvent? event;
   String? accessToken;
   String? message;

@@ -1,189 +1,273 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// StackedRouterGenerator
+// StackedNavigatorGenerator
 // **************************************************************************
 
-// ignore_for_file: public_member_api_docs, unused_import, non_constant_identifier_names
-
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:flutter/foundation.dart' as _i10;
+import 'package:flutter/material.dart' as _i9;
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-
-import '../views/screens/auth/auth_view.dart';
-import '../views/screens/home/home_view.dart';
-import '../views/screens/loading/loading_view.dart';
-import '../views/screens/settings/entity_selector_view.dart';
-import '../views/screens/settings/settings_view.dart';
-import '../views/screens/setup/setup_view.dart';
+import 'package:home_portal/views/screens/auth/auth_view.dart' as _i5;
+import 'package:home_portal/views/screens/home/home_view.dart' as _i4;
+import 'package:home_portal/views/screens/loading/loading_view.dart' as _i2;
+import 'package:home_portal/views/screens/settings/entity_selector_view.dart'
+    as _i6;
+import 'package:home_portal/views/screens/settings/settings_view.dart' as _i8;
+import 'package:home_portal/views/screens/setup/setup_view.dart' as _i3;
+import 'package:home_portal/views/screens/view_selector/view_selector_view.dart'
+    as _i7;
+import 'package:stacked/stacked.dart' as _i1;
+import 'package:stacked_services/stacked_services.dart' as _i11;
 
 class Routes {
-  static const String loadingView = '/';
-  static const String setupView = '/setup-view';
-  static const String homeView = '/home-view';
-  static const String authView = '/auth-view';
-  static const String entitySelectorView = '/entity-selector-view';
-  static const String settingsView = '/settings-view';
+  static const loadingView = '/';
+
+  static const setupView = '/setup-view';
+
+  static const homeView = '/home-view';
+
+  static const authView = '/auth-view';
+
+  static const entitySelectorView = '/entity-selector-view';
+
+  static const viewSelectorView = '/view-selector-view';
+
+  static const settingsView = '/settings-view';
+
   static const all = <String>{
     loadingView,
     setupView,
     homeView,
     authView,
     entitySelectorView,
+    viewSelectorView,
     settingsView,
   };
 }
 
-class StackedRouter extends RouterBase {
-  @override
-  List<RouteDef> get routes => _routes;
-  final _routes = <RouteDef>[
-    RouteDef(Routes.loadingView, page: LoadingView),
-    RouteDef(Routes.setupView, page: SetupView),
-    RouteDef(Routes.homeView, page: HomeView),
-    RouteDef(Routes.authView, page: AuthView),
-    RouteDef(Routes.entitySelectorView, page: EntitySelectorView),
-    RouteDef(Routes.settingsView, page: SettingsView),
+class StackedRouter extends _i1.RouterBase {
+  final _routes = <_i1.RouteDef>[
+    _i1.RouteDef(
+      Routes.loadingView,
+      page: _i2.LoadingView,
+    ),
+    _i1.RouteDef(
+      Routes.setupView,
+      page: _i3.SetupView,
+    ),
+    _i1.RouteDef(
+      Routes.homeView,
+      page: _i4.HomeView,
+    ),
+    _i1.RouteDef(
+      Routes.authView,
+      page: _i5.AuthView,
+    ),
+    _i1.RouteDef(
+      Routes.entitySelectorView,
+      page: _i6.EntitySelectorView,
+    ),
+    _i1.RouteDef(
+      Routes.viewSelectorView,
+      page: _i7.ViewSelectorView,
+    ),
+    _i1.RouteDef(
+      Routes.settingsView,
+      page: _i8.SettingsView,
+    ),
   ];
-  @override
-  Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
-  final _pagesMap = <Type, StackedRouteFactory>{
-    LoadingView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => LoadingView(),
+
+  final _pagesMap = <Type, _i1.StackedRouteFactory>{
+    _i2.LoadingView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i2.LoadingView(),
         settings: data,
       );
     },
-    SetupView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => SetupView(),
+    _i3.SetupView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i3.SetupView(),
         settings: data,
       );
     },
-    HomeView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => const HomeView(),
+    _i4.HomeView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i4.HomeView(),
         settings: data,
       );
     },
-    AuthView: (data) {
-      var args = data.getArgs<AuthViewArguments>(
-        orElse: () => AuthViewArguments(),
+    _i5.AuthView: (data) {
+      final args = data.getArgs<AuthViewArguments>(
+        orElse: () => const AuthViewArguments(),
       );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => AuthView(key: args.key),
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i5.AuthView(key: args.key),
         settings: data,
       );
     },
-    EntitySelectorView: (data) {
-      var args = data.getArgs<EntitySelectorViewArguments>(nullOk: false);
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => EntitySelectorView(
-          key: args.key,
-          selected: args.selected,
-        ),
+    _i6.EntitySelectorView: (data) {
+      final args = data.getArgs<EntitySelectorViewArguments>(nullOk: false);
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) =>
+            _i6.EntitySelectorView(key: args.key, selected: args.selected),
         settings: data,
       );
     },
-    SettingsView: (data) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => SettingsView(),
+    _i7.ViewSelectorView: (data) {
+      final args = data.getArgs<ViewSelectorViewArguments>(nullOk: false);
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) =>
+            _i7.ViewSelectorView(currentSelectedPath: args.currentSelectedPath),
+        settings: data,
+      );
+    },
+    _i8.SettingsView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => _i8.SettingsView(),
         settings: data,
       );
     },
   };
+
+  @override
+  List<_i1.RouteDef> get routes => _routes;
+  @override
+  Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-/// ************************************************************************
-/// Arguments holder classes
-/// *************************************************************************
-
-/// AuthView arguments holder class
 class AuthViewArguments {
-  final Key? key;
-  AuthViewArguments({this.key});
+  const AuthViewArguments({this.key});
+
+  final _i10.Key? key;
+
+  @override
+  String toString() {
+    return '{"key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant AuthViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode;
+  }
 }
 
-/// EntitySelectorView arguments holder class
 class EntitySelectorViewArguments {
-  final Key? key;
+  const EntitySelectorViewArguments({
+    this.key,
+    required this.selected,
+  });
+
+  final _i10.Key? key;
+
   final Set<String> selected;
-  EntitySelectorViewArguments({this.key, required this.selected});
+
+  @override
+  String toString() {
+    return '{"key": "$key", "selected": "$selected"}';
+  }
+
+  @override
+  bool operator ==(covariant EntitySelectorViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.selected == selected;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ selected.hashCode;
+  }
 }
 
-/// ************************************************************************
-/// Extension for strongly typed navigation
-/// *************************************************************************
+class ViewSelectorViewArguments {
+  const ViewSelectorViewArguments({required this.currentSelectedPath});
 
-extension NavigatorStateExtension on NavigationService {
-  Future<dynamic> navigateToLoadingView({
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo(
-      Routes.loadingView,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
+  final String currentSelectedPath;
+
+  @override
+  String toString() {
+    return '{"currentSelectedPath": "$currentSelectedPath"}';
   }
 
-  Future<dynamic> navigateToSetupView({
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo(
-      Routes.setupView,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
+  @override
+  bool operator ==(covariant ViewSelectorViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.currentSelectedPath == currentSelectedPath;
   }
 
-  Future<dynamic> navigateToHomeView({
+  @override
+  int get hashCode {
+    return currentSelectedPath.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i11.NavigationService {
+  Future<dynamic> navigateToLoadingView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  }) async {
-    return navigateTo(
-      Routes.homeView,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
+  ]) async {
+    return navigateTo<dynamic>(Routes.loadingView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToSetupView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.setupView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.homeView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
   }
 
   Future<dynamic> navigateToAuthView({
-    Key? key,
+    _i10.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return navigateTo(
-      Routes.authView,
-      arguments: AuthViewArguments(key: key),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
+    return navigateTo<dynamic>(Routes.authView,
+        arguments: AuthViewArguments(key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
   }
 
   Future<dynamic> navigateToEntitySelectorView({
-    Key? key,
+    _i10.Key? key,
     required Set<String> selected,
     int? routerId,
     bool preventDuplicates = true,
@@ -191,29 +275,148 @@ extension NavigatorStateExtension on NavigationService {
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return navigateTo(
-      Routes.entitySelectorView,
-      arguments: EntitySelectorViewArguments(key: key, selected: selected),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
+    return navigateTo<dynamic>(Routes.entitySelectorView,
+        arguments: EntitySelectorViewArguments(key: key, selected: selected),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
   }
 
-  Future<dynamic> navigateToSettingsView({
+  Future<dynamic> navigateToViewSelectorView({
+    required String currentSelectedPath,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return navigateTo(
-      Routes.settingsView,
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
+    return navigateTo<dynamic>(Routes.viewSelectorView,
+        arguments:
+            ViewSelectorViewArguments(currentSelectedPath: currentSelectedPath),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToSettingsView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.settingsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithLoadingView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.loadingView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithSetupView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.setupView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.homeView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithAuthView({
+    _i10.Key? key,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.authView,
+        arguments: AuthViewArguments(key: key),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithEntitySelectorView({
+    _i10.Key? key,
+    required Set<String> selected,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.entitySelectorView,
+        arguments: EntitySelectorViewArguments(key: key, selected: selected),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithViewSelectorView({
+    required String currentSelectedPath,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.viewSelectorView,
+        arguments:
+            ViewSelectorViewArguments(currentSelectedPath: currentSelectedPath),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithSettingsView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.settingsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
   }
 }

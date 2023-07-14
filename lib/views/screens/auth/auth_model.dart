@@ -21,4 +21,8 @@ class AuthModel extends BaseViewModel {
 
     _navigationService.back();
   }
+
+  void loginWithToken() {
+    //_authService.loginWithToken();
+  }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:all_sensors/all_sensors.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,15 @@ class HomeModel extends ReactiveViewModel {
 
   List<String> get screenSaverEntities => _settingsService.screenSaverEntities;
 
+  bool get allowNavigation => _settingsService.allowNavigation;
+
+  bool get isMirror => _settingsService.pinnedView == "mirror";
+
+  LovelaceView get pinnedView =>
+      _hassService.lovelaceViews.firstWhereOrNull(
+          (element) => element.path == _settingsService.pinnedView) ??
+      _hassService.lovelaceViews.first;
+
   int proximityThreshold = 700;
 
   Timer? _proximityFuture;
@@ -31,24 +41,27 @@ class HomeModel extends ReactiveViewModel {
 
   Future<void> init() async {
     _hassService.init();
-    proximitySub = proximityEvents?.listen((ProximityEvent event) async {
-      if (proximityThreshold <= event.proximity) {
-        _proximityFuture?.cancel();
-        _proximityFuture = null;
-        if (!_screenOn) {
-          _screenOn = true;
-          await ScreenBrightness().setScreenBrightness(1);
-          notifyListeners();
+
+    if (Platform.isAndroid) {
+      proximitySub = proximityEvents?.listen((ProximityEvent event) async {
+        if (proximityThreshold <= event.proximity) {
+          _proximityFuture?.cancel();
+          _proximityFuture = null;
+          if (!_screenOn) {
+            _screenOn = true;
+            await ScreenBrightness().setScreenBrightness(1);
+            notifyListeners();
+          }
+        } else {
+          _proximityFuture ??= Timer(const Duration(seconds: 5), () async {
+            print("Dimming..");
+            await ScreenBrightness().setScreenBrightness(0);
+            _screenOn = false;
+            notifyListeners();
+          });
         }
-      } else {
-        _proximityFuture ??= Timer(const Duration(seconds: 5), () async {
-          print("Dimming..");
-          await ScreenBrightness().setScreenBrightness(0);
-          _screenOn = false;
-          notifyListeners();
-        });
-      }
-    });
+      });
+    }
   }
 
   void wake() {
@@ -183,5 +196,5 @@ class HomeModel extends ReactiveViewModel {
       .toList();
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_hassService];
+  List<ListenableServiceMixin> get listenableServices => [_hassService];
 }

@@ -1,11 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../app/app.locator.dart';
+import '../settings/settings_service.dart';
 import 'oauth_token_result.dart';
 import 'token_utils.dart';
 import 'mobile.dart';
@@ -15,7 +17,6 @@ enum AuthServiceStatus {
   loading, // Initial state of the service
   loggedIn, // Logged in
   loggedOut, // Logged out
-
 }
 
 // Preference keys for storing the tokens.
@@ -34,22 +35,19 @@ class AuthService extends ChangeNotifier {
   //  Timer that refreshes the access token
   Timer? _refreshTimer;
 
-  final _storage = const FlutterSecureStorage();
+  final _settingsService = locator<SettingsService>();
 
-  late OAuthHandler _handler;
+  late SharedPreferences _preferences;
 
-  Future<void> init({
-    required String address,
-    required String clientId,
-    required String redirectUrl,
-    required List<String> scopes,
-  }) async {
+  OAuthHandler? _handler;
+
+  Future<void> init() async {
+    _preferences = await SharedPreferences.getInstance();
     _handler = MobileAuth(
-      address: address,
-      clientId: clientId,
-      redirectUrl: redirectUrl,
-      scopes: scopes,
-    );
+        address: _settingsService.internalUrl!,
+        redirectUrl: "com.example.prolace://login-callback",
+        clientId: "https://electriccookie.github.io/prolace/",
+        scopes: []);
 
     await _init();
   }
@@ -85,25 +83,23 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<bool> get hasRefreshToken async {
-    return (await _storage.read(key: prefsRefreshToken)) != null;
+    return (_preferences.getString(prefsRefreshToken)) != null;
   }
 
   bool get isLoggedIn => _status == AuthServiceStatus.loggedIn;
 
   // Token getters
-  Future<String?> get refreshToken => _storage.read(key: prefsRefreshToken);
-  Future<String?> get accessToken => _storage.read(key: prefsAccessToken);
+  String? get refreshToken => _preferences.getString(prefsRefreshToken);
+  String? get accessToken => _preferences.getString(prefsAccessToken);
 
   // Return a map  of claims in the id token
   Future<Map<String, dynamic>?> get idClaims async {
-    var token = await refreshToken;
-
-    return token != null ? getTokenPayload(token) : null;
+    return refreshToken != null ? getTokenPayload(refreshToken!) : null;
   }
 
   // Return the DateTime when the access token expires
   Future<DateTime?> get accessTokenExpiresAt async {
-    var expiry = await _storage.read(key: prefsAccessTokenExpiry);
+    var expiry = _preferences.getString(prefsAccessTokenExpiry);
     if (expiry != null) {
       return DateTime.parse(expiry);
     }
@@ -146,12 +142,12 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<void> _refreshAccessToken() async {
-    var refreshToken = await this.refreshToken;
+    var refreshToken = this.refreshToken;
     if (refreshToken == null) {
       throw Exception("No refresh token");
     }
 
-    var result = await _handler.refreshAccessToken(refreshToken);
+    var result = await _handler!.refreshAccessToken(refreshToken);
 
     // Store the new tokens
     _saveTokens(result);
@@ -161,31 +157,35 @@ class AuthService extends ChangeNotifier {
 
   // Persist all tokens in a TokenResponse
   void _saveTokens(OAuthTokenResult response) async {
-    _storage.write(key: prefsAccessToken, value: response.accessToken!);
-    _storage.write(
-        key: prefsAccessTokenExpiry,
-        value: DateTime.now()
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setString(prefsAccessToken, response.accessToken!);
+    prefs.setString(
+        prefsAccessTokenExpiry,
+        DateTime.now()
             .add(Duration(seconds: response.expiresIn))
             .toIso8601String());
 
     if (response.refreshToken != null) {
-      _storage.write(key: prefsRefreshToken, value: response.refreshToken!);
+      prefs.setString(prefsRefreshToken, response.refreshToken!);
     }
   }
 
   // Try to log the user in. Returns a future bool whether the attempt was successful.
   Future<void> login() async {
-    var result = await _handler.login();
+    if (_handler == null) {
+      init();
+    }
+    var result = await _handler!.login();
     _saveTokens(result);
     _status = AuthServiceStatus.loggedIn;
     notifyListeners();
   }
 
   Future<void> logout() async {
-    _storage.delete(key: prefsAccessToken);
-    _storage.delete(key: prefsRefreshToken);
+    _preferences.remove(prefsAccessToken);
+    _preferences.remove(prefsRefreshToken);
 
-    _storage.delete(key: prefsAccessTokenExpiry);
+    _preferences.remove(prefsAccessTokenExpiry);
     _status = AuthServiceStatus.loggedOut;
     notifyListeners();
   }

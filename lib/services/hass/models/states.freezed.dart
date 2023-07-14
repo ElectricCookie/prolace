@@ -35,7 +35,8 @@ mixin _$HassState {
 /// @nodoc
 abstract class $HassStateCopyWith<$Res> {
   factory $HassStateCopyWith(HassState value, $Res Function(HassState) then) =
-      _$HassStateCopyWithImpl<$Res>;
+      _$HassStateCopyWithImpl<$Res, HassState>;
+  @useResult
   $Res call(
       {String entityId,
       String state,
@@ -45,43 +46,46 @@ abstract class $HassStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$HassStateCopyWithImpl<$Res> implements $HassStateCopyWith<$Res> {
+class _$HassStateCopyWithImpl<$Res, $Val extends HassState>
+    implements $HassStateCopyWith<$Res> {
   _$HassStateCopyWithImpl(this._value, this._then);
 
-  final HassState _value;
   // ignore: unused_field
-  final $Res Function(HassState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? entityId = freezed,
-    Object? state = freezed,
-    Object? attributes = freezed,
+    Object? entityId = null,
+    Object? state = null,
+    Object? attributes = null,
     Object? lastChanged = freezed,
     Object? lastUpdated = freezed,
   }) {
     return _then(_value.copyWith(
-      entityId: entityId == freezed
+      entityId: null == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String,
-      state: state == freezed
+      state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String,
-      attributes: attributes == freezed
+      attributes: null == attributes
           ? _value.attributes
           : attributes // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      lastChanged: lastChanged == freezed
+      lastChanged: freezed == lastChanged
           ? _value.lastChanged
           : lastChanged // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastUpdated: lastUpdated == freezed
+      lastUpdated: freezed == lastUpdated
           ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -91,6 +95,7 @@ abstract class _$$_HassStateCopyWith<$Res> implements $HassStateCopyWith<$Res> {
           _$_HassState value, $Res Function(_$_HassState) then) =
       __$$_HassStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String entityId,
       String state,
@@ -100,41 +105,40 @@ abstract class _$$_HassStateCopyWith<$Res> implements $HassStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_HassStateCopyWithImpl<$Res> extends _$HassStateCopyWithImpl<$Res>
+class __$$_HassStateCopyWithImpl<$Res>
+    extends _$HassStateCopyWithImpl<$Res, _$_HassState>
     implements _$$_HassStateCopyWith<$Res> {
   __$$_HassStateCopyWithImpl(
       _$_HassState _value, $Res Function(_$_HassState) _then)
-      : super(_value, (v) => _then(v as _$_HassState));
+      : super(_value, _then);
 
-  @override
-  _$_HassState get _value => super._value as _$_HassState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? entityId = freezed,
-    Object? state = freezed,
-    Object? attributes = freezed,
+    Object? entityId = null,
+    Object? state = null,
+    Object? attributes = null,
     Object? lastChanged = freezed,
     Object? lastUpdated = freezed,
   }) {
     return _then(_$_HassState(
-      entityId: entityId == freezed
+      entityId: null == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
               as String,
-      state: state == freezed
+      state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String,
-      attributes: attributes == freezed
+      attributes: null == attributes
           ? _value._attributes
           : attributes // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      lastChanged: lastChanged == freezed
+      lastChanged: freezed == lastChanged
           ? _value.lastChanged
           : lastChanged // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastUpdated: lastUpdated == freezed
+      lastUpdated: freezed == lastUpdated
           ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -183,28 +187,30 @@ class _$_HassState implements _HassState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_HassState &&
-            const DeepCollectionEquality().equals(other.entityId, entityId) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
+            (identical(other.entityId, entityId) ||
+                other.entityId == entityId) &&
+            (identical(other.state, state) || other.state == state) &&
             const DeepCollectionEquality()
                 .equals(other._attributes, _attributes) &&
-            const DeepCollectionEquality()
-                .equals(other.lastChanged, lastChanged) &&
-            const DeepCollectionEquality()
-                .equals(other.lastUpdated, lastUpdated));
+            (identical(other.lastChanged, lastChanged) ||
+                other.lastChanged == lastChanged) &&
+            (identical(other.lastUpdated, lastUpdated) ||
+                other.lastUpdated == lastUpdated));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(entityId),
-      const DeepCollectionEquality().hash(state),
+      entityId,
+      state,
       const DeepCollectionEquality().hash(_attributes),
-      const DeepCollectionEquality().hash(lastChanged),
-      const DeepCollectionEquality().hash(lastUpdated));
+      lastChanged,
+      lastUpdated);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HassStateCopyWith<_$_HassState> get copyWith =>
       __$$_HassStateCopyWithImpl<_$_HassState>(this, _$identity);
 

@@ -8,30 +8,32 @@ import 'package:stacked_hooks/stacked_hooks.dart';
 import '../../../app/app.router.dart';
 
 class SettingsView extends StatelessWidget {
+  const SettingsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsModel>.reactive(
         viewModelBuilder: () => SettingsModel(),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
-              title: Text("Settings"),
+              title: const Text("Settings"),
             ),
             body: ListView(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               children: [
-                Text(
-                  "Screen saver",
-                  style: Theme.of(context).textTheme.caption,
+                const SettingsLabel(
+                  Text(
+                    "Screen saver",
+                  ),
                 ),
                 ListTile(
-                  title: Text("Enable screen saver"),
+                  title: const Text("Enable screen saver"),
                   trailing: Switch(
                     value: model.screenSaverEnabled,
                     onChanged: (value) => model.setScreenSaverEnabled(value),
                   ),
                 ),
                 ListTile(
-                  title: Text("Screen saver entities"),
+                  title: const Text("Screen saver entities"),
                   subtitle: Text(model.screenSaverEntities.isEmpty
                       ? "None"
                       : model.screenSaverEntities.join(", ")),
@@ -45,15 +47,64 @@ class SettingsView extends StatelessWidget {
                     }
                     model.setScreenSaverEntities(newEntities as List<String>);
                   },
+                  trailing: const Icon(Icons.chevron_right),
                 ),
-                Divider(),
+                const Divider(),
+                const SettingsLabel(
+                  Text(
+                    "Navigation",
+                  ),
+                ),
+                ListTile(
+                  title: const Text("Allow navigation"),
+                  subtitle: const Text("Enables the bottom navigation bar"),
+                  trailing: Switch(
+                    value: model.allowNavigation,
+                    onChanged: (value) => model.setAllowNavigation(value),
+                  ),
+                ),
+                ListTile(
+                  title: const Text("Pinned view"),
+                  subtitle: Text(model.pinnedView == "none "
+                      ? "Select.."
+                      : model.pinnedView),
+                  onTap: () {
+                    model.onChoosePinnedView();
+                  },
+                  trailing: const Icon(Icons.chevron_right),
+                ),
+                const Divider(),
+                const SettingsLabel(
+                  Text(
+                    "Connection",
+                  ),
+                ),
                 ConnectionSettingsView()
               ],
             )));
   }
 }
 
+class SettingsLabel extends StatelessWidget {
+  final Text text;
+
+  const SettingsLabel(this.text, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: DefaultTextStyle(
+        style: Theme.of(context).textTheme.labelSmall!,
+        child: text,
+      ),
+    );
+  }
+}
+
 class ConnectionSettingsView extends HookViewModelWidget<SettingsModel> {
+  const ConnectionSettingsView({super.key});
+
   @override
   Widget buildViewModelWidget(BuildContext context, SettingsModel viewModel) {
     final internalUrlController = useTextEditingController(
@@ -65,38 +116,35 @@ class ConnectionSettingsView extends HookViewModelWidget<SettingsModel> {
     useEffect(() {
       internalUrlController.text = viewModel.internalUrl ?? "";
       externalUrlController.text = viewModel.externalUrl ?? "";
+      return null;
     }, [viewModel.internalUrl, viewModel.externalUrl]);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Connection",
-          style: Theme.of(context).textTheme.caption,
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        TextField(
-          keyboardType: TextInputType.url,
-          decoration: InputDecoration(labelText: "Internal URL"),
-          controller: internalUrlController,
-          onSubmitted: (value) {
-            viewModel.setInternalUrl(value);
-          },
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        TextField(
-          keyboardType: TextInputType.url,
-          decoration: InputDecoration(labelText: "External URL"),
-          controller: externalUrlController,
-          onSubmitted: (value) {
-            viewModel.setExternalUrl(value);
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            keyboardType: TextInputType.url,
+            decoration: const InputDecoration(labelText: "Internal URL"),
+            controller: internalUrlController,
+            onSubmitted: (value) {
+              viewModel.setInternalUrl(value);
+            },
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          TextField(
+            keyboardType: TextInputType.url,
+            decoration: const InputDecoration(labelText: "External URL"),
+            controller: externalUrlController,
+            onSubmitted: (value) {
+              viewModel.setExternalUrl(value);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

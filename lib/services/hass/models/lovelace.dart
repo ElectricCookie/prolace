@@ -10,6 +10,7 @@ class LovelaceView with _$LovelaceView {
     String? theme,
     String? title,
     List<String>? visible,
+    String? path,
     String? icon,
     String? type,
     List<LovelaceCard>? cards,

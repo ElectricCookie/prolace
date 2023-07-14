@@ -59,8 +59,8 @@ class MirrorView extends StackedView<MirrorModel> {
                             "${viewModel.averageIndoorTemperature}°C avg inside"),
                         avatar: const Icon(Icons.thermostat)),
                     Chip(
-                        label:
-                            Text("${viewModel.outsideHumidity}%  avg inside"),
+                        label: Text(
+                            "${viewModel.averageIndoorHumidity}%  avg inside"),
                         avatar: const Icon(Icons.water_drop)),
                     Chip(
                         label: Text(

@@ -74,7 +74,7 @@ class MirrorView extends StackedView<MirrorModel> {
                         avatar: const Icon(Icons.power)),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 64),
                 ImplicitlyAnimatedList<Entity>(
                   items: viewModel.activeLights,
                   shrinkWrap: true,

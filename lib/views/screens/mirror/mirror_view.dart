@@ -31,7 +31,7 @@ class MirrorView extends StackedView<MirrorModel> {
             width: MediaQuery.of(context).size.width / 3,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 8.0, top: MediaQuery.of(context).size.height / 4.0),
+                  left: 8.0, top: MediaQuery.of(context).size.height / 3.0),
               child: ListView(children: [
                 const DefaultTextStyle(
                     style:

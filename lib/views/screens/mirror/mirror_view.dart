@@ -1,15 +1,11 @@
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:home_portal/services/hass/models/states.dart';
 import 'package:home_portal/views/screens/home/lovelace/time.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_hooks/stacked_hooks.dart';
 
 import '../../../services/hass/models/entity.dart';
-import '../home/lovelace/icons.dart';
 import 'mirror_model.dart';
 
 class MirrorView extends StackedView<MirrorModel> {
@@ -57,6 +53,14 @@ class MirrorView extends StackedView<MirrorModel> {
                         avatar: const Icon(Icons.thermostat)),
                     Chip(
                         label: Text("${viewModel.outsideHumidity}%  outside"),
+                        avatar: const Icon(Icons.water_drop)),
+                    Chip(
+                        label: Text(
+                            "${viewModel.averageIndoorTemperature}°C avg inside"),
+                        avatar: const Icon(Icons.thermostat)),
+                    Chip(
+                        label:
+                            Text("${viewModel.outsideHumidity}%  avg inside"),
                         avatar: const Icon(Icons.water_drop)),
                     Chip(
                         label: Text(
@@ -130,7 +134,6 @@ class CardItem extends StatelessWidget {
       child: SizedBox(
         width: 300,
         child: Card(
-          color: Colors.white.withAlpha(200),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
@@ -138,7 +141,7 @@ class CardItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.white.withAlpha(100),
+                    backgroundColor: Colors.white.withAlpha(50),
                     child: Icon(Icons.lightbulb,
                         size: 24, color: Colors.yellow.shade800),
                   ),
@@ -152,7 +155,7 @@ class CardItem extends StatelessWidget {
                         maxLines: 2,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                           fontSize: 16,
                         ),
                       ),
@@ -162,7 +165,7 @@ class CardItem extends StatelessWidget {
                         maxLines: 2,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white60,
                           fontSize: 12,
                         ),
                       ),

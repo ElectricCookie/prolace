@@ -96,4 +96,20 @@ class MirrorModel extends ReactiveViewModel {
     }
     return "?";
   }
+
+  String get averageIndoorTemperature {
+    var state = _hassService.state["sensor.average_temperature"];
+    if (state != null) {
+      return state.state;
+    }
+    return "?";
+  }
+
+  String get averageIndoorHumidity {
+    var state = _hassService.state["sensor.average_humidity"];
+    if (state != null) {
+      return state.state;
+    }
+    return "?";
+  }
 }

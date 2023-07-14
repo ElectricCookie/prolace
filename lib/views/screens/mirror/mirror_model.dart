@@ -57,4 +57,40 @@ class MirrorModel extends ReactiveViewModel {
     }
     return "?";
   }
+
+  String get lightStatus {
+    final lightsActiveCount = activeLights.length;
+
+    if (lightsActiveCount == 0) {
+      return "No lights on";
+    } else if (lightsActiveCount == 1) {
+      return "1 light on";
+    } else {
+      return "$lightsActiveCount lights on";
+    }
+  }
+
+  String get outsideHumidity {
+    var state = _hassService.state["sensor.outside_multisensor_humidity_2"];
+    if (state != null) {
+      return state.state;
+    }
+    return "?";
+  }
+
+  String get powerNow {
+    var state = _hassService.state["sensor.power_libellenweg_4"];
+    if (state != null) {
+      return state.state;
+    }
+    return "?";
+  }
+
+  String get lockState {
+    var state = _hassService.state["lock.nuki_front_door_lock"];
+    if (state != null) {
+      return state.state == "locked" ? "Locked" : "Unlocked";
+    }
+    return "?";
+  }
 }

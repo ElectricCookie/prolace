@@ -37,20 +37,37 @@ class MirrorView extends StackedView<MirrorModel> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const DefaultTextStyle(
-                        style: TextStyle(fontSize: 32), child: TimeView()),
+                        style: TextStyle(
+                            fontSize: 64, fontWeight: FontWeight.bold),
+                        child: TimeView()),
                     const SizedBox(height: 4),
-                    Text(viewModel.date),
+                    Text(viewModel.date, style: const TextStyle(fontSize: 16)),
                     const SizedBox(height: 16),
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
                       children: [
                         Chip(
-                            label: Text(
-                                "${viewModel.activeLights.length} lights on")),
+                            label: Text(viewModel.lightStatus),
+                            avatar: const Icon(Icons.light)),
                         Chip(
                             label: Text(
-                                "${viewModel.outsideTemperature}°C outside")),
+                                "${viewModel.outsideTemperature}°C outside"),
+                            avatar: const Icon(Icons.thermostat)),
+                        Chip(
+                            label:
+                                Text("${viewModel.outsideHumidity}%  outside"),
+                            avatar: const Icon(Icons.water_drop)),
+                        Chip(
+                            label: Text(
+                              viewModel.lockState,
+                            ),
+                            avatar: const Icon(Icons.lock)),
+                        Chip(
+                            label: Text(
+                              "${viewModel.powerNow}W now",
+                            ),
+                            avatar: const Icon(Icons.power)),
                       ],
                     ),
                     const SizedBox(height: 16),

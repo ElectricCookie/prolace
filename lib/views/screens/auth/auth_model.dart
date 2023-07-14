@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 
 class AuthModel extends FormViewModel {
   // Call the auth service
@@ -28,6 +29,7 @@ class AuthModel extends FormViewModel {
     if (accessTokenValue != null) {
       try {
         _authService.loginWithToken(accessTokenValue!);
+        _navigationService.navigateTo(Routes.loadingView);
       } catch (e) {
         print(e);
         setAccessTokenValidationMessage(e.toString());

@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../services/hass/hass_service.dart';
 import '../../../services/hass/models/lovelace.dart';
 
@@ -31,6 +32,10 @@ class MirrorModel extends ReactiveViewModel {
 
     var now = DateTime.now();
     return "${weekdays[now.weekday]} ${now.day}.${now.month}.${now.year}";
+  }
+
+  void showSettings() {
+    _navigationService.navigateTo(Routes.settingsView);
   }
 
   // Get currently active lights

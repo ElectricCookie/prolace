@@ -15,6 +15,16 @@ class MirrorView extends StackedView<MirrorModel> {
   @override
   Widget builder(BuildContext context, MirrorModel viewModel, Widget? child) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                viewModel.showSettings();
+              },
+              icon: const Icon(Icons.settings)),
+        ],
+      ),
       body: Stack(children: [
         Align(
           alignment: Alignment.centerLeft,

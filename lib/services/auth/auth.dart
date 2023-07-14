@@ -23,6 +23,7 @@ enum AuthServiceStatus {
 String prefsAccessToken = "auth_service_access_token";
 String prefsRefreshToken = "auth_service_refresh_token";
 String prefsAccessTokenExpiry = "auth_service_access_token_expiry";
+String prefsLongLivedToken = "auth_service_long_lived_token";
 
 class AuthService extends ChangeNotifier {
   // Service status
@@ -43,6 +44,7 @@ class AuthService extends ChangeNotifier {
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
+
     _handler = MobileAuth(
         address: _settingsService.internalUrl!,
         redirectUrl: "com.example.prolace://login-callback",
@@ -55,6 +57,12 @@ class AuthService extends ChangeNotifier {
   Future<void> _init() async {
     _status = AuthServiceStatus.loading;
     notifyListeners();
+
+    if (await hasLongLivedToken) {
+      _status = AuthServiceStatus.loggedIn;
+      notifyListeners();
+      return;
+    }
 
     if (await hasRefreshToken) {
       // Theres a refresh token. Since we are starting. Fetch a new access token.
@@ -75,6 +83,12 @@ class AuthService extends ChangeNotifier {
       return null;
     });
   }
+
+  bool get hasLongLivedToken {
+    return (_preferences.getString(prefsLongLivedToken)) != null;
+  }
+
+  String get longLivedToken => _preferences.getString(prefsLongLivedToken)!;
 
   void resurrect() {
     // Restart timer
@@ -179,6 +193,13 @@ class AuthService extends ChangeNotifier {
     _saveTokens(result);
     _status = AuthServiceStatus.loggedIn;
     notifyListeners();
+  }
+
+  Future<void> loginWithToken(String longLivedToken) async {
+    _preferences = await SharedPreferences.getInstance();
+    _preferences.setString(prefsLongLivedToken, longLivedToken);
+    await init();
+    _status = AuthServiceStatus.loggedIn;
   }
 
   Future<void> logout() async {

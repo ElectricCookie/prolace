@@ -69,7 +69,10 @@ class HassService with ListenableServiceMixin {
         switch (message.type) {
           case "auth_required":
             _channel?.sink.add(jsonEncode(Message(
-                    type: "auth", accessToken: await _authService.accessToken)
+                    type: "auth",
+                    accessToken: _authService.hasLongLivedToken
+                        ? _authService.longLivedToken
+                        : _authService.accessToken)
                 .toJson()
               ..removeWhere((key, value) => value == null)));
             break;

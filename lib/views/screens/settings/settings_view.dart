@@ -79,7 +79,10 @@ class SettingsView extends StatelessWidget {
                     "Connection",
                   ),
                 ),
-                ConnectionSettingsView()
+                ConnectionSettingsView(),
+                const Divider(),
+                ElevatedButton(
+                    onPressed: model.logout, child: const Text("Logout"))
               ],
             )));
   }

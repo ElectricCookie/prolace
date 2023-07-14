@@ -1,11 +1,12 @@
 import 'package:home_portal/services/auth/auth.dart';
 import 'package:home_portal/services/settings/settings_service.dart';
+import 'package:home_portal/views/screens/auth/auth_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
 
-class AuthModel extends BaseViewModel {
+class AuthModel extends FormViewModel {
   // Call the auth service
   final SettingsService _settingsService = locator<SettingsService>();
   final NavigationService _navigationService = locator<NavigationService>();
@@ -23,6 +24,15 @@ class AuthModel extends BaseViewModel {
   }
 
   void loginWithToken() {
-    //_authService.loginWithToken();
+    setBusy(true);
+    if (accessTokenValue != null) {
+      try {
+        _authService.loginWithToken(accessTokenValue!);
+      } catch (e) {
+        print(e);
+        setAccessTokenValidationMessage(e.toString());
+      }
+    }
+    setBusy(false);
   }
 }

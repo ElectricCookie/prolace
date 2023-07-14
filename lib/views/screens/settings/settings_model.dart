@@ -61,4 +61,14 @@ class SettingsModel extends ReactiveViewModel {
   void setScreenSaverEntities(List<String> entities) {
     _settingsService.screenSaverEntities = entities;
   }
+
+  void logout() {
+    _settingsService.internalUrl = null;
+    _settingsService.externalUrl = null;
+    _settingsService.screenSaverEnabled = false;
+    _settingsService.screenSaverEntities = [];
+    _settingsService.allowNavigation = false;
+    _settingsService.pinnedView = "mirror";
+    _navigationService.replaceWith(Routes.authView);
+  }
 }

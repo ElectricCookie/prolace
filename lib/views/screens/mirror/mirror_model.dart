@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_portal/services/hass/models/entity.dart';
+import 'package:home_portal/services/hass/models/states.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -16,6 +17,8 @@ class MirrorModel extends ReactiveViewModel {
   List<ListenableServiceMixin> get listenableServices => [_hassService];
 
   List<LovelaceView> get views => _hassService.lovelaceViews;
+
+  Map<String, HassState> get states => _hassService.state;
 
   bool get ready => _hassService.ready;
 

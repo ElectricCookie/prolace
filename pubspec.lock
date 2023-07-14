@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
+  animated_list_plus:
+    dependency: "direct main"
+    description:
+      name: animated_list_plus
+      sha256: fe66f9c300d715254727fbdf050487844d17b013fec344fa28081d29bddbdf1a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.5"
   args:
     dependency: transitive
     description:

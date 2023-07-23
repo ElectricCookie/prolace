@@ -24,17 +24,17 @@ class MirrorModel extends ReactiveViewModel {
 
   String get date {
     final weekdays = [
-      "Sunday",
       "Monday",
       "Tuesday",
       "Wednesday",
       "Thursday",
       "Friday",
       "Saturday",
+      "Sunday",
     ];
 
     var now = DateTime.now();
-    return "${weekdays[now.weekday]} ${now.day}.${now.month}.${now.year}";
+    return "${weekdays[now.weekday - 1]} ${now.day}.${now.month}.${now.year}";
   }
 
   void showSettings() {

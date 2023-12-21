@@ -22,39 +22,64 @@ class AuthView extends StackedView<AuthModel> with $AuthView {
   }
 
   @override
-  Widget builder(BuildContext context, AuthModel model, Widget? child) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: const Text("Auth"),
-      ),
-      body: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          children: [
-            Text(
-              "Authentication is required.",
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-                onPressed: model.login, child: const Text("Login with OAuth")),
-            const SizedBox(height: 16),
-            const Text(
-                "In case you have trouble with OAuth, you can use a long lived access token:"),
-            const SizedBox(height: 8),
-            Form(
-              child: TextField(
+  Widget builder(BuildContext context, AuthModel viewModel, Widget? child) {
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: const Text("Auth"),
+        ),
+        body: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 48.0, vertical: 16),
+                child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width / 3,
+                        maxHeight: MediaQuery.of(context).size.height / 3),
+                    child: Image.asset("assets/plugin.png")),
+              ),
+              Text(
+                "Connect to your Home Assistant instance at \n${viewModel.baseUrl}",
+                style: const TextStyle(fontSize: 24),
+              ),
+              const Text(
+                  "To access your Home Assistant instance, you need to login."),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  onPressed: viewModel.login,
+                  child: const Text("Login with OAuth")),
+              const SizedBox(
+                height: 32,
+              ),
+              const Text(
+                  "In case you have trouble with OAuth, you can use a long lived access token:"),
+              const SizedBox(height: 16),
+              TextField(
                 controller: accessTokenController,
                 decoration: InputDecoration(
-                    errorText: model.accessTokenValidationMessage,
+                    border: const OutlineInputBorder(),
+                    errorText: viewModel.accessTokenValidationMessage,
                     label: const Text("Long lived access token")),
               ),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-                onPressed: model.loginWithToken,
-                child: const Text("Login with access token")),
-          ]),
+              TextButton(
+                  onPressed: viewModel.loginWithToken,
+                  child: const Text("Login with access token")),
+              const SizedBox(height: 32),
+              Row(
+                children: [
+                  TextButton(
+                      onPressed: viewModel.reset,
+                      child: const Text("Back to setup")),
+                ],
+              ),
+            ]),
+      ),
     );
   }
 

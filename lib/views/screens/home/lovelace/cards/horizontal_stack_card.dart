@@ -5,8 +5,8 @@ import 'package:home_portal/views/screens/home/lovelace/card.dart';
 import 'package:stacked/stacked.dart';
 
 class HorizontalStackCard extends ViewModelWidget<HomeModel> {
-  LovelaceCard card;
-  HorizontalStackCard(this.card, {super.key});
+  final LovelaceCard card;
+  const HorizontalStackCard(this.card, {super.key});
 
   @override
   Widget build(BuildContext context, HomeModel viewModel) {
@@ -14,8 +14,16 @@ class HorizontalStackCard extends ViewModelWidget<HomeModel> {
         child: Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children:
-          card.cards?.map((e) => Expanded(child: CardView(e))).toList() ?? [],
+      children: card.cards
+              ?.map((e) => Expanded(
+                      child: Padding(
+                    padding: EdgeInsets.only(
+                      right: e == card.cards!.last ? 0 : 8.0,
+                    ),
+                    child: CardView(e),
+                  )))
+              .toList() ??
+          [],
     ));
   }
 }

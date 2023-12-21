@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:home_portal/services/hass/models/entity.dart';
 import 'package:home_portal/services/hass/models/states.dart';
 import 'package:stacked/stacked.dart';

@@ -21,7 +21,15 @@ class AuthModel extends FormViewModel {
 
     await _authService.login();
 
-    _navigationService.back();
+    _navigationService.clearStackAndShow(Routes.loadingView);
+  }
+
+  String? get baseUrl => _settingsService.internalUrl;
+
+  void reset() {
+    _settingsService.internalUrl = null;
+    _settingsService.externalUrl = null;
+    _navigationService.navigateTo(Routes.setupView);
   }
 
   void loginWithToken() {

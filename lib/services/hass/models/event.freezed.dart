@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'event.dart';
 
@@ -81,10 +81,11 @@ class _$HassEventCopyWithImpl<$Res, $Val extends HassEvent>
 }
 
 /// @nodoc
-abstract class _$$_HassEventCopyWith<$Res> implements $HassEventCopyWith<$Res> {
-  factory _$$_HassEventCopyWith(
-          _$_HassEvent value, $Res Function(_$_HassEvent) then) =
-      __$$_HassEventCopyWithImpl<$Res>;
+abstract class _$$HassEventImplCopyWith<$Res>
+    implements $HassEventCopyWith<$Res> {
+  factory _$$HassEventImplCopyWith(
+          _$HassEventImpl value, $Res Function(_$HassEventImpl) then) =
+      __$$HassEventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? eventType, HassEventData? data});
@@ -94,11 +95,11 @@ abstract class _$$_HassEventCopyWith<$Res> implements $HassEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_HassEventCopyWithImpl<$Res>
-    extends _$HassEventCopyWithImpl<$Res, _$_HassEvent>
-    implements _$$_HassEventCopyWith<$Res> {
-  __$$_HassEventCopyWithImpl(
-      _$_HassEvent _value, $Res Function(_$_HassEvent) _then)
+class __$$HassEventImplCopyWithImpl<$Res>
+    extends _$HassEventCopyWithImpl<$Res, _$HassEventImpl>
+    implements _$$HassEventImplCopyWith<$Res> {
+  __$$HassEventImplCopyWithImpl(
+      _$HassEventImpl _value, $Res Function(_$HassEventImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +108,7 @@ class __$$_HassEventCopyWithImpl<$Res>
     Object? eventType = freezed,
     Object? data = freezed,
   }) {
-    return _then(_$_HassEvent(
+    return _then(_$HassEventImpl(
       eventType: freezed == eventType
           ? _value.eventType
           : eventType // ignore: cast_nullable_to_non_nullable
@@ -123,11 +124,11 @@ class __$$_HassEventCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_HassEvent implements _HassEvent {
-  const _$_HassEvent({this.eventType, this.data});
+class _$HassEventImpl implements _HassEvent {
+  const _$HassEventImpl({this.eventType, this.data});
 
-  factory _$_HassEvent.fromJson(Map<String, dynamic> json) =>
-      _$$_HassEventFromJson(json);
+  factory _$HassEventImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HassEventImplFromJson(json);
 
   @override
   final String? eventType;
@@ -143,7 +144,7 @@ class _$_HassEvent implements _HassEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HassEvent &&
+            other is _$HassEventImpl &&
             (identical(other.eventType, eventType) ||
                 other.eventType == eventType) &&
             (identical(other.data, data) || other.data == data));
@@ -156,12 +157,12 @@ class _$_HassEvent implements _HassEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HassEventCopyWith<_$_HassEvent> get copyWith =>
-      __$$_HassEventCopyWithImpl<_$_HassEvent>(this, _$identity);
+  _$$HassEventImplCopyWith<_$HassEventImpl> get copyWith =>
+      __$$HassEventImplCopyWithImpl<_$HassEventImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HassEventToJson(
+    return _$$HassEventImplToJson(
       this,
     );
   }
@@ -169,10 +170,10 @@ class _$_HassEvent implements _HassEvent {
 
 abstract class _HassEvent implements HassEvent {
   const factory _HassEvent(
-      {final String? eventType, final HassEventData? data}) = _$_HassEvent;
+      {final String? eventType, final HassEventData? data}) = _$HassEventImpl;
 
   factory _HassEvent.fromJson(Map<String, dynamic> json) =
-      _$_HassEvent.fromJson;
+      _$HassEventImpl.fromJson;
 
   @override
   String? get eventType;
@@ -180,7 +181,7 @@ abstract class _HassEvent implements HassEvent {
   HassEventData? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_HassEventCopyWith<_$_HassEvent> get copyWith =>
+  _$$HassEventImplCopyWith<_$HassEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -271,11 +272,11 @@ class _$HassEventDataCopyWithImpl<$Res, $Val extends HassEventData>
 }
 
 /// @nodoc
-abstract class _$$_HassEventDataCopyWith<$Res>
+abstract class _$$HassEventDataImplCopyWith<$Res>
     implements $HassEventDataCopyWith<$Res> {
-  factory _$$_HassEventDataCopyWith(
-          _$_HassEventData value, $Res Function(_$_HassEventData) then) =
-      __$$_HassEventDataCopyWithImpl<$Res>;
+  factory _$$HassEventDataImplCopyWith(
+          _$HassEventDataImpl value, $Res Function(_$HassEventDataImpl) then) =
+      __$$HassEventDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? entityId, HassState? newState, HassState? oldState});
@@ -287,11 +288,11 @@ abstract class _$$_HassEventDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_HassEventDataCopyWithImpl<$Res>
-    extends _$HassEventDataCopyWithImpl<$Res, _$_HassEventData>
-    implements _$$_HassEventDataCopyWith<$Res> {
-  __$$_HassEventDataCopyWithImpl(
-      _$_HassEventData _value, $Res Function(_$_HassEventData) _then)
+class __$$HassEventDataImplCopyWithImpl<$Res>
+    extends _$HassEventDataCopyWithImpl<$Res, _$HassEventDataImpl>
+    implements _$$HassEventDataImplCopyWith<$Res> {
+  __$$HassEventDataImplCopyWithImpl(
+      _$HassEventDataImpl _value, $Res Function(_$HassEventDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -301,7 +302,7 @@ class __$$_HassEventDataCopyWithImpl<$Res>
     Object? newState = freezed,
     Object? oldState = freezed,
   }) {
-    return _then(_$_HassEventData(
+    return _then(_$HassEventDataImpl(
       entityId: freezed == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
@@ -321,11 +322,11 @@ class __$$_HassEventDataCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_HassEventData implements _HassEventData {
-  const _$_HassEventData({this.entityId, this.newState, this.oldState});
+class _$HassEventDataImpl implements _HassEventData {
+  const _$HassEventDataImpl({this.entityId, this.newState, this.oldState});
 
-  factory _$_HassEventData.fromJson(Map<String, dynamic> json) =>
-      _$$_HassEventDataFromJson(json);
+  factory _$HassEventDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HassEventDataImplFromJson(json);
 
   @override
   final String? entityId;
@@ -343,7 +344,7 @@ class _$_HassEventData implements _HassEventData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HassEventData &&
+            other is _$HassEventDataImpl &&
             (identical(other.entityId, entityId) ||
                 other.entityId == entityId) &&
             (identical(other.newState, newState) ||
@@ -359,12 +360,12 @@ class _$_HassEventData implements _HassEventData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HassEventDataCopyWith<_$_HassEventData> get copyWith =>
-      __$$_HassEventDataCopyWithImpl<_$_HassEventData>(this, _$identity);
+  _$$HassEventDataImplCopyWith<_$HassEventDataImpl> get copyWith =>
+      __$$HassEventDataImplCopyWithImpl<_$HassEventDataImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HassEventDataToJson(
+    return _$$HassEventDataImplToJson(
       this,
     );
   }
@@ -374,10 +375,10 @@ abstract class _HassEventData implements HassEventData {
   const factory _HassEventData(
       {final String? entityId,
       final HassState? newState,
-      final HassState? oldState}) = _$_HassEventData;
+      final HassState? oldState}) = _$HassEventDataImpl;
 
   factory _HassEventData.fromJson(Map<String, dynamic> json) =
-      _$_HassEventData.fromJson;
+      _$HassEventDataImpl.fromJson;
 
   @override
   String? get entityId;
@@ -387,6 +388,6 @@ abstract class _HassEventData implements HassEventData {
   HassState? get oldState;
   @override
   @JsonKey(ignore: true)
-  _$$_HassEventDataCopyWith<_$_HassEventData> get copyWith =>
+  _$$HassEventDataImplCopyWith<_$HassEventDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

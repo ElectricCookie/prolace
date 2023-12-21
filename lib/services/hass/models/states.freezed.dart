@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'states.dart';
 
@@ -90,10 +90,11 @@ class _$HassStateCopyWithImpl<$Res, $Val extends HassState>
 }
 
 /// @nodoc
-abstract class _$$_HassStateCopyWith<$Res> implements $HassStateCopyWith<$Res> {
-  factory _$$_HassStateCopyWith(
-          _$_HassState value, $Res Function(_$_HassState) then) =
-      __$$_HassStateCopyWithImpl<$Res>;
+abstract class _$$HassStateImplCopyWith<$Res>
+    implements $HassStateCopyWith<$Res> {
+  factory _$$HassStateImplCopyWith(
+          _$HassStateImpl value, $Res Function(_$HassStateImpl) then) =
+      __$$HassStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -105,11 +106,11 @@ abstract class _$$_HassStateCopyWith<$Res> implements $HassStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_HassStateCopyWithImpl<$Res>
-    extends _$HassStateCopyWithImpl<$Res, _$_HassState>
-    implements _$$_HassStateCopyWith<$Res> {
-  __$$_HassStateCopyWithImpl(
-      _$_HassState _value, $Res Function(_$_HassState) _then)
+class __$$HassStateImplCopyWithImpl<$Res>
+    extends _$HassStateCopyWithImpl<$Res, _$HassStateImpl>
+    implements _$$HassStateImplCopyWith<$Res> {
+  __$$HassStateImplCopyWithImpl(
+      _$HassStateImpl _value, $Res Function(_$HassStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -121,7 +122,7 @@ class __$$_HassStateCopyWithImpl<$Res>
     Object? lastChanged = freezed,
     Object? lastUpdated = freezed,
   }) {
-    return _then(_$_HassState(
+    return _then(_$HassStateImpl(
       entityId: null == entityId
           ? _value.entityId
           : entityId // ignore: cast_nullable_to_non_nullable
@@ -149,8 +150,8 @@ class __$$_HassStateCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_HassState implements _HassState {
-  const _$_HassState(
+class _$HassStateImpl implements _HassState {
+  const _$HassStateImpl(
       {required this.entityId,
       required this.state,
       required final Map<String, dynamic> attributes,
@@ -158,8 +159,8 @@ class _$_HassState implements _HassState {
       this.lastUpdated})
       : _attributes = attributes;
 
-  factory _$_HassState.fromJson(Map<String, dynamic> json) =>
-      _$$_HassStateFromJson(json);
+  factory _$HassStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HassStateImplFromJson(json);
 
   @override
   final String entityId;
@@ -168,6 +169,7 @@ class _$_HassState implements _HassState {
   final Map<String, dynamic> _attributes;
   @override
   Map<String, dynamic> get attributes {
+    if (_attributes is EqualUnmodifiableMapView) return _attributes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_attributes);
   }
@@ -186,7 +188,7 @@ class _$_HassState implements _HassState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HassState &&
+            other is _$HassStateImpl &&
             (identical(other.entityId, entityId) ||
                 other.entityId == entityId) &&
             (identical(other.state, state) || other.state == state) &&
@@ -211,12 +213,12 @@ class _$_HassState implements _HassState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HassStateCopyWith<_$_HassState> get copyWith =>
-      __$$_HassStateCopyWithImpl<_$_HassState>(this, _$identity);
+  _$$HassStateImplCopyWith<_$HassStateImpl> get copyWith =>
+      __$$HassStateImplCopyWithImpl<_$HassStateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HassStateToJson(
+    return _$$HassStateImplToJson(
       this,
     );
   }
@@ -228,10 +230,10 @@ abstract class _HassState implements HassState {
       required final String state,
       required final Map<String, dynamic> attributes,
       final String? lastChanged,
-      final String? lastUpdated}) = _$_HassState;
+      final String? lastUpdated}) = _$HassStateImpl;
 
   factory _HassState.fromJson(Map<String, dynamic> json) =
-      _$_HassState.fromJson;
+      _$HassStateImpl.fromJson;
 
   @override
   String get entityId;
@@ -245,6 +247,6 @@ abstract class _HassState implements HassState {
   String? get lastUpdated;
   @override
   @JsonKey(ignore: true)
-  _$$_HassStateCopyWith<_$_HassState> get copyWith =>
+  _$$HassStateImplCopyWith<_$HassStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

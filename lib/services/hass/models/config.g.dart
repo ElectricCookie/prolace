@@ -6,8 +6,8 @@ part of 'config.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_HassConfig _$$_HassConfigFromJson(Map<String, dynamic> json) =>
-    _$_HassConfig(
+_$HassConfigImpl _$$HassConfigImplFromJson(Map<String, dynamic> json) =>
+    _$HassConfigImpl(
       components: (json['components'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
@@ -24,7 +24,7 @@ _$_HassConfig _$$_HassConfigFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_HassConfigToJson(_$_HassConfig instance) =>
+Map<String, dynamic> _$$HassConfigImplToJson(_$HassConfigImpl instance) =>
     <String, dynamic>{
       'components': instance.components,
       'locationName': instance.locationName,
@@ -37,15 +37,16 @@ Map<String, dynamic> _$$_HassConfigToJson(_$_HassConfig instance) =>
       'whitelistExternalDirs': instance.whitelistExternalDirs,
     };
 
-_$_HassUnitSystem _$$_HassUnitSystemFromJson(Map<String, dynamic> json) =>
-    _$_HassUnitSystem(
+_$HassUnitSystemImpl _$$HassUnitSystemImplFromJson(Map<String, dynamic> json) =>
+    _$HassUnitSystemImpl(
       length: json['length'] as String,
       mass: json['mass'] as String,
       temperature: json['temperature'] as String,
       volume: json['volume'] as String,
     );
 
-Map<String, dynamic> _$$_HassUnitSystemToJson(_$_HassUnitSystem instance) =>
+Map<String, dynamic> _$$HassUnitSystemImplToJson(
+        _$HassUnitSystemImpl instance) =>
     <String, dynamic>{
       'length': instance.length,
       'mass': instance.mass,

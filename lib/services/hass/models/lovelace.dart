@@ -12,6 +12,7 @@ class LovelaceView with _$LovelaceView {
     List<String>? visible,
     String? path,
     String? icon,
+    bool? subview,
     String? type,
     List<LovelaceCard>? cards,
   }) = _LovelaceView;
@@ -27,12 +28,18 @@ class LovelaceCard with _$LovelaceCard {
     String? type,
     String? title,
     List<LovelaceCard>? cards,
+    MapSource? mapSource,
+    LovelaceCard? card,
     String? name,
     String? icon,
     String? entity,
+    String? template,
+    List<LovelaceCondition>? conditions,
     List<dynamic>? entities,
     List<MushroomChip>? chips,
     String? primaryInfo,
+    String? primary,
+    String? secondary,
     bool? square,
     int? columns,
     String? secondaryInfo,
@@ -44,10 +51,41 @@ class LovelaceCard with _$LovelaceCard {
 }
 
 @freezed
+class MapSource with _$MapSource {
+  const factory MapSource({
+    String? camera,
+  }) = _MapSource;
+
+  factory MapSource.fromJson(Map<String, dynamic> json) =>
+      _$MapSourceFromJson(json);
+}
+
+@freezed
+class LovelaceCondition with _$LovelaceCondition {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory LovelaceCondition({
+    String? condition,
+    String? entity,
+    // Either a string or a list of strings
+    dynamic state,
+    // Either a string or a list of strings
+    dynamic stateNot,
+    String? above,
+    String? below,
+    String? mediaQuery,
+    List<String>? users,
+  }) = _LovelaceCondition;
+
+  factory LovelaceCondition.fromJson(Map<String, dynamic> json) =>
+      _$LovelaceConditionFromJson(json);
+}
+
+@freezed
 class MushroomChip with _$MushroomChip {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory MushroomChip({
     String? icon,
+    required String type,
     String? name,
     String? entity,
     String? contentInfo,

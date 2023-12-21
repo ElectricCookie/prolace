@@ -21,8 +21,20 @@ class GridCard extends ViewModelWidget<HomeModel> {
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children:
-          columns.map((e) => Expanded(child: Column(children: e))).toList(),
+      children: columns
+          .map((e) => Expanded(
+                  child: Padding(
+                padding: EdgeInsets.only(right: e == columns.last ? 0 : 8.0),
+                child: Column(
+                    children: e
+                        .map((item) => item == e.last
+                            ? item
+                            : Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: item))
+                        .toList()),
+              )))
+          .toList(),
     );
   }
 }

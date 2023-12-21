@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:home_portal/views/screens/setup/setup_model.dart';
 import 'package:stacked/stacked.dart';
@@ -11,13 +10,15 @@ import 'setup_view.form.dart';
   FormTextField(name: "port", initialValue: "8123"),
 ])
 class SetupView extends StatelessWidget with $SetupView {
+  const SetupView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SetupModel>.reactive(
         viewModelBuilder: (() => SetupModel()),
-        onModelReady: (model) {
+        onViewModelReady: (model) {
           model.init();
-          listenToFormUpdated(model);
+          syncFormWithViewModel(model);
         },
         onDispose: (model) => disposeForm(),
         builder: (context, model, child) => Scaffold(
@@ -46,19 +47,19 @@ class SetupView extends StatelessWidget with $SetupView {
                   children: model.hassInstances
                       .map((e) => ListTile(
                             title: Text(e),
-                            onTap: () => model.connect("http://" + e),
-                            subtitle: Text("Found on your network"),
-                            trailing: Icon(Icons.chevron_right),
+                            onTap: () => model.connect("http://$e"),
+                            subtitle: const Text("Found on your network"),
+                            trailing: const Icon(Icons.chevron_right),
                           ))
                       .toList(),
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
                   child: Text(
                     "Manual configuration",
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 Form(
@@ -76,11 +77,11 @@ class SetupView extends StatelessWidget with $SetupView {
                                 labelText: "IP Address",
                                 hintText: "IP Address",
                                 errorText: model.hostValidationMessage,
-                                border: OutlineInputBorder()),
+                                border: const OutlineInputBorder()),
                             onChanged: (value) => {},
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         Expanded(
@@ -91,7 +92,7 @@ class SetupView extends StatelessWidget with $SetupView {
                                 labelText: "Port",
                                 hintText: "Port",
                                 errorText: model.portValidationMessage,
-                                border: OutlineInputBorder()),
+                                border: const OutlineInputBorder()),
                             onChanged: (value) => {},
                           ),
                         ),
@@ -108,7 +109,7 @@ class SetupView extends StatelessWidget with $SetupView {
                       TextButton(
                           onPressed:
                               model.isFormValid ? model.connectManual : null,
-                          child: Text("Connect")),
+                          child: const Text("Connect")),
                     ],
                   ),
                 ),

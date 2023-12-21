@@ -6,7 +6,8 @@ part of 'states.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_HassState _$$_HassStateFromJson(Map<String, dynamic> json) => _$_HassState(
+_$HassStateImpl _$$HassStateImplFromJson(Map<String, dynamic> json) =>
+    _$HassStateImpl(
       entityId: json['entity_id'] as String,
       state: json['state'] as String,
       attributes: json['attributes'] as Map<String, dynamic>,
@@ -14,7 +15,7 @@ _$_HassState _$$_HassStateFromJson(Map<String, dynamic> json) => _$_HassState(
       lastUpdated: json['last_updated'] as String?,
     );
 
-Map<String, dynamic> _$$_HassStateToJson(_$_HassState instance) =>
+Map<String, dynamic> _$$HassStateImplToJson(_$HassStateImpl instance) =>
     <String, dynamic>{
       'entity_id': instance.entityId,
       'state': instance.state,

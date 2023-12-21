@@ -60,23 +60,23 @@ class EntitySelectorView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
                 leading: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () =>
                       Navigator.of(context).pop(model.selected.toList()),
                 ),
                 actions: [
                   if (model.showOnlySelected)
                     IconButton(
-                      icon: Icon(Icons.check_box),
+                      icon: const Icon(Icons.check_box),
                       onPressed: () => model.toggleShowOnlySelected(),
                     ),
                   if (!model.showOnlySelected)
                     IconButton(
-                      icon: Icon(Icons.check_box_outline_blank),
+                      icon: const Icon(Icons.check_box_outline_blank),
                       onPressed: () => model.toggleShowOnlySelected(),
                     ),
                 ],
-                title: Text("Select entities")),
+                title: const Text("Select entities")),
             body: ListView.builder(
                 itemCount: model.entityCount,
                 itemBuilder: ((context, index) {

@@ -38,11 +38,18 @@ dependencies:
   screen_brightness: ^0.2.2
   bonsoir: ^1.0.1+2
   all_sensors: ^0.4.2
+  dots_indicator: ^2.1.1
+  dart_jts: 0.3.0+1
+  permission_handler: ^11.1.0
+  flutter_colorpicker: ^1.0.3
   flutter_neumorphic: ^3.2.0
+  collection: ^1.18.0
   material_design_icons_flutter: ^5.0.6996
   animated_list_plus: ^0.4.3
+  animated_flip_counter: ^0.2.6
+  flutter_animate: ^4.3.0
   flutter_appauth: ^4.1.0+1
-  flex_color_scheme: ^7.1.2
+
   json_annotation: ^4.6.0
   shared_preferences: ^2.0.15
   http: ^0.13.4
@@ -51,6 +58,8 @@ dependencies:
   stacked_hooks: ^0.2.2
   freezed_annotation: ^2.1.0
   flutter_reorderable_grid_view: ^4.0.0
+
+  network_info_plus: ^4.1.0
 
 dev_dependencies:
   flutter_test:

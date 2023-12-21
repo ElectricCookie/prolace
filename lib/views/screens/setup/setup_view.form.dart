@@ -9,6 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+const bool _autoTextFieldValidation = true;
+
 const String HostValueKey = 'host';
 const String PortValueKey = 'port';
 
@@ -26,6 +28,7 @@ mixin $SetupView {
       _getFormTextEditingController(HostValueKey, initialValue: 'http://');
   TextEditingController get portController =>
       _getFormTextEditingController(PortValueKey, initialValue: '8123');
+
   FocusNode get hostFocusNode => _getFormFocusNode(HostValueKey);
   FocusNode get portFocusNode => _getFormFocusNode(PortValueKey);
 
@@ -52,9 +55,11 @@ mixin $SetupView {
 
   /// Registers a listener on every generated controller that calls [model.setData()]
   /// with the latest textController values
-  void syncFormWithViewModel(FormViewModel model) {
+  void syncFormWithViewModel(FormStateHelper model) {
     hostController.addListener(() => _updateFormData(model));
     portController.addListener(() => _updateFormData(model));
+
+    _updateFormData(model, forceValidate: _autoTextFieldValidation);
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -66,16 +71,12 @@ mixin $SetupView {
   void listenToFormUpdated(FormViewModel model) {
     hostController.addListener(() => _updateFormData(model));
     portController.addListener(() => _updateFormData(model));
-  }
 
-  static const bool _autoTextFieldValidation = true;
-  bool validateFormFields(FormViewModel model) {
-    _updateFormData(model, forceValidate: true);
-    return model.isFormValid;
+    _updateFormData(model, forceValidate: _autoTextFieldValidation);
   }
 
   /// Updates the formData on the FormViewModel
-  void _updateFormData(FormViewModel model, {bool forceValidate = false}) {
+  void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
       model.formValueMap
         ..addAll({
@@ -87,6 +88,11 @@ mixin $SetupView {
     if (_autoTextFieldValidation || forceValidate) {
       updateValidationData(model);
     }
+  }
+
+  bool validateFormFields(FormViewModel model) {
+    _updateFormData(model, forceValidate: true);
+    return model.isFormValid;
   }
 
   /// Calls dispose on all the generated controllers and focus nodes
@@ -105,18 +111,24 @@ mixin $SetupView {
   }
 }
 
-extension ValueProperties on FormViewModel {
-  bool get isFormValid =>
-      this.fieldsValidationMessages.values.every((element) => element == null);
+extension ValueProperties on FormStateHelper {
+  bool get hasAnyValidationMessage => this
+      .fieldsValidationMessages
+      .values
+      .any((validation) => validation != null);
+
+  bool get isFormValid {
+    if (!_autoTextFieldValidation) this.validateForm();
+
+    return !hasAnyValidationMessage;
+  }
+
   String? get hostValue => this.formValueMap[HostValueKey] as String?;
   String? get portValue => this.formValueMap[PortValueKey] as String?;
 
   set hostValue(String? value) {
     this.setData(
-      this.formValueMap
-        ..addAll({
-          HostValueKey: value,
-        }),
+      this.formValueMap..addAll({HostValueKey: value}),
     );
 
     if (_SetupViewTextEditingControllers.containsKey(HostValueKey)) {
@@ -126,10 +138,7 @@ extension ValueProperties on FormViewModel {
 
   set portValue(String? value) {
     this.setData(
-      this.formValueMap
-        ..addAll({
-          PortValueKey: value,
-        }),
+      this.formValueMap..addAll({PortValueKey: value}),
     );
 
     if (_SetupViewTextEditingControllers.containsKey(PortValueKey)) {
@@ -155,7 +164,7 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[PortValueKey];
 }
 
-extension Methods on FormViewModel {
+extension Methods on FormStateHelper {
   setHostValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[HostValueKey] = validationMessage;
   setPortValidationMessage(String? validationMessage) =>
@@ -189,7 +198,8 @@ String? getValidationMessage(String key) {
 }
 
 /// Updates the fieldsValidationMessages on the FormViewModel
-void updateValidationData(FormViewModel model) => model.setValidationMessages({
+void updateValidationData(FormStateHelper model) =>
+    model.setValidationMessages({
       HostValueKey: getValidationMessage(HostValueKey),
       PortValueKey: getValidationMessage(PortValueKey),
     });

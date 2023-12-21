@@ -6,7 +6,7 @@ part of 'entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Entity _$$_EntityFromJson(Map<String, dynamic> json) => _$_Entity(
+_$EntityImpl _$$EntityImplFromJson(Map<String, dynamic> json) => _$EntityImpl(
       areaId: json['area_id'] as String?,
       configEntryId: json['config_entry_id'] as String?,
       deviceId: json['device_id'] as String?,
@@ -15,7 +15,8 @@ _$_Entity _$$_EntityFromJson(Map<String, dynamic> json) => _$_Entity(
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_EntityToJson(_$_Entity instance) => <String, dynamic>{
+Map<String, dynamic> _$$EntityImplToJson(_$EntityImpl instance) =>
+    <String, dynamic>{
       'area_id': instance.areaId,
       'config_entry_id': instance.configEntryId,
       'device_id': instance.deviceId,

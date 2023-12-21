@@ -5,17 +5,15 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../../../app/app.locator.dart';
 import '../../../../services/hass/hass_service.dart';
 
-IconData getIcon(String icon, {Entity? entity}) {
-  if (icon.isEmpty && entity != null) {
-    icon = entity.icon ?? "";
+IconData getIcon(String? icon, {Entity? entity}) {
+  if (icon != null) {
+    if (icon.startsWith("mdi:")) {
+      return MdiIcons.fromString(icon.substring("mdi:".length)) ??
+          Icons.question_mark;
+    }
   }
 
-  if (icon.startsWith("mdi:")) {
-    return MdiIcons.fromString(icon.substring("mdi:".length)) ??
-        Icons.question_mark;
-  }
-
-  if (icon.isEmpty && entity != null) {
+  if (entity != null) {
     return domainIcon(entity);
   }
 
@@ -25,9 +23,9 @@ IconData getIcon(String icon, {Entity? entity}) {
 IconData domainIcon(
   Entity entity,
 ) {
-  final _hassService = locator<HassService>();
+  final hassService = locator<HassService>();
 
-  var state = _hassService.state[entity.entityId];
+  var state = hassService.state[entity.entityId];
 
   var attributes = state?.attributes ?? {};
 
@@ -39,6 +37,10 @@ IconData domainIcon(
 
   var unit = attributes["unit_of_measurement"];
 
+  if (attributes["icon"] != null) {
+    return getIcon(attributes["icon"]);
+  }
+
   switch (domain) {
     case "button":
       switch (attributes["device_class"]) {
@@ -49,6 +51,18 @@ IconData domainIcon(
         default:
           return MdiIcons.gestureTapButton;
       }
+    case "cover":
+      switch (compareState) {
+        case "open":
+          return MdiIcons.windowShutterOpen;
+        case "closed":
+          return MdiIcons.windowShutter;
+        default:
+          return MdiIcons.windowShutterAlert;
+      }
+
+    case "light":
+      return MdiIcons.lightbulb;
 
     case "sensor":
       {
@@ -63,6 +77,50 @@ IconData domainIcon(
           ? MdiIcons.accountArrowRight
           : MdiIcons.account;
 
+    case "weather":
+      switch (compareState) {
+        case "clear-night":
+          return MdiIcons.weatherNight;
+        case "cloudy":
+          return MdiIcons.weatherCloudy;
+        case "fog":
+          return MdiIcons.weatherFog;
+        case "hail":
+          return MdiIcons.weatherHail;
+        case "lightning":
+          return MdiIcons.weatherLightning;
+        case "lightning-rainy":
+          return MdiIcons.weatherLightningRainy;
+        case "partlycloudy":
+          return MdiIcons.weatherPartlyCloudy;
+        case "pouring":
+          return MdiIcons.weatherPouring;
+        case "rainy":
+          return MdiIcons.weatherRainy;
+        case "snowy":
+          return MdiIcons.weatherSnowy;
+        case "snowy-rainy":
+          return MdiIcons.weatherSnowyRainy;
+        case "sunny":
+          return MdiIcons.weatherSunny;
+        case "windy":
+          return MdiIcons.weatherWindy;
+        case "windy-variant":
+          return MdiIcons.weatherWindyVariant;
+        default:
+          return MdiIcons.weatherSunny;
+      }
+
+    case "climate":
+      switch (compareState) {
+        case "cool":
+          return MdiIcons.snowflake;
+        case "heat":
+          return MdiIcons.fire;
+        default:
+          return MdiIcons.thermometer;
+      }
+
     case "switch":
       switch (deviceClass) {
         case "outlet":
@@ -76,19 +134,32 @@ IconData domainIcon(
         default:
           return MdiIcons.toggleSwitchVariant;
       }
+    case "timer":
+      return MdiIcons.timer;
 
     case "humidifier":
       return compareState == "off"
           ? MdiIcons.airHumidifierOff
           : MdiIcons.airHumidifier;
-
+    case "lock":
+      switch (compareState) {
+        case "unlocked":
+          return MdiIcons.lockOpenOutline;
+        case "jammed":
+          return MdiIcons.lockAlert;
+        case "locking":
+        case "unlocking":
+          return MdiIcons.lockClock;
+        default:
+          return MdiIcons.lock;
+      }
     case "input_boolean":
       return compareState == "on"
           ? MdiIcons.checkCircleOutline
           : MdiIcons.closeCircleOutline;
   }
 
-  return Icons.question_mark;
+  return Icons.circle;
   /*
 
     case "input_datetime":

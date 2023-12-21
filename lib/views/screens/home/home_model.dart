@@ -14,7 +14,6 @@ import 'package:stacked/stacked.dart';
 
 import '../../../app/app.locator.dart';
 import 'package:collection/collection.dart';
-import '../../../services/hass/message.dart';
 import '../../../services/hass/models/entity.dart';
 import '../../../services/hass/models/states.dart';
 
@@ -75,14 +74,19 @@ class HomeModel extends ReactiveViewModel {
     proximitySub?.cancel();
   }
 
-  bool get screenOn => _screenOn;
-
-  Future<void> toggleLight() async {
-    _hassService.callService(
-        "light", "toggle", {}, {"entity_id": "light.bedroom_desk"});
+  Future<String> renderTemplate(String template) async {
+    return _hassService.renderTemplate(template);
   }
 
-  List<LovelaceView> get lovelaceViews => _hassService.lovelaceViews;
+  bool get screenOn => _screenOn;
+
+  Future<void> toggleLight(String entityId) async {
+    _hassService.callService("light", "toggle", {}, {"entity_id": entityId});
+  }
+
+  List<LovelaceView> get lovelaceViews => _hassService.lovelaceViews
+      .where((element) => element.subview != true)
+      .toList();
 
   bool get ready => _hassService.ready;
 
@@ -103,12 +107,84 @@ class HomeModel extends ReactiveViewModel {
 
   int get likelyView => _hassService.likelyView;
 
+  void lock(String entityId) {
+    _hassService.callService("lock", "lock", {}, {"entity_id": entityId});
+  }
+
+  void unlock(String entityId) {
+    _hassService.callService("lock", "unlock", {}, {"entity_id": entityId});
+  }
+
   Map<String, dynamic> getEntityAttributes(String? entityId) {
     var state = _hassService.state[entityId];
     if (state == null) {
       return {};
     }
     return state.attributes;
+  }
+
+  void pressButton(String entityId) {
+    _hassService.callService("button", "press", {}, {"entity_id": entityId});
+  }
+
+  String cameraImage(String entityId) {
+    return _hassService.cameraImage(entityId);
+  }
+
+  void adjustCover(String? entityId, double value) {
+    _hassService.callService("cover", "set_cover_position", {
+      "position": value.toInt()
+    }, {
+      "entity_id": entityId,
+    });
+  }
+
+  void setLightColorTemperature(String? entityId, int kelvin) {
+    _hassService.callService("light", "turn_on", {
+      "color_temp": kelvin
+    }, {
+      "entity_id": entityId,
+    });
+  }
+
+  void setLightColor(String? entityId, int red, int green, int blue) {
+    _hassService.callService("light", "turn_on", {
+      "rgb_color": [red, green, blue].map((e) => e.toInt()).toList()
+    }, {
+      "entity_id": entityId,
+    });
+  }
+
+  void mediaPlayerPrevious(String? entityId) {
+    _hassService.callService("media_player", "media_previous_track", {}, {
+      "entity_id": entityId,
+    });
+  }
+
+  void mediaPlayerNext(String? entityId) {
+    _hassService.callService("media_player", "media_next_track", {}, {
+      "entity_id": entityId,
+    });
+  }
+
+  void mediaPlayerPause(String? entityId) {
+    _hassService.callService("media_player", "media_pause", {}, {
+      "entity_id": entityId,
+    });
+  }
+
+  void mediaPlayerPlay(String? entityId) {
+    _hassService.callService("media_player", "media_play", {}, {
+      "entity_id": entityId,
+    });
+  }
+
+  void setMediaPlayerVolume(String? entityId, double volume) {
+    _hassService.callService("media_player", "volume_set", {
+      "volume_level": volume
+    }, {
+      "entity_id": entityId,
+    });
   }
 
   String? getEntityState(String? entityId) {
@@ -130,6 +206,22 @@ class HomeModel extends ReactiveViewModel {
   void adjustInputNumber(String? entityId, double value) {
     _hassService.callService("input_number", "set_value", {
       "value": value
+    }, {
+      "entity_id": entityId,
+    });
+  }
+
+  void setThermostatTemperature(String? entityId, double value) {
+    _hassService.callService("climate", "set_temperature", {
+      "temperature": value
+    }, {
+      "entity_id": entityId,
+    });
+  }
+
+  void setInputSelect(String? entityId, String value) {
+    _hassService.callService("input_select", "select_option", {
+      "option": value
     }, {
       "entity_id": entityId,
     });

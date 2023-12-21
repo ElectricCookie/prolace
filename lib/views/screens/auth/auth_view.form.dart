@@ -9,6 +9,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+const bool _autoTextFieldValidation = true;
+
 const String AccessTokenValueKey = 'accessToken';
 
 final Map<String, TextEditingController> _AuthViewTextEditingControllers = {};
@@ -22,6 +24,7 @@ final Map<String, String? Function(String?)?> _AuthViewTextValidations = {
 mixin $AuthView {
   TextEditingController get accessTokenController =>
       _getFormTextEditingController(AccessTokenValueKey);
+
   FocusNode get accessTokenFocusNode => _getFormFocusNode(AccessTokenValueKey);
 
   TextEditingController _getFormTextEditingController(
@@ -47,8 +50,10 @@ mixin $AuthView {
 
   /// Registers a listener on every generated controller that calls [model.setData()]
   /// with the latest textController values
-  void syncFormWithViewModel(FormViewModel model) {
+  void syncFormWithViewModel(FormStateHelper model) {
     accessTokenController.addListener(() => _updateFormData(model));
+
+    _updateFormData(model, forceValidate: _autoTextFieldValidation);
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -59,16 +64,12 @@ mixin $AuthView {
   )
   void listenToFormUpdated(FormViewModel model) {
     accessTokenController.addListener(() => _updateFormData(model));
-  }
 
-  static const bool _autoTextFieldValidation = true;
-  bool validateFormFields(FormViewModel model) {
-    _updateFormData(model, forceValidate: true);
-    return model.isFormValid;
+    _updateFormData(model, forceValidate: _autoTextFieldValidation);
   }
 
   /// Updates the formData on the FormViewModel
-  void _updateFormData(FormViewModel model, {bool forceValidate = false}) {
+  void _updateFormData(FormStateHelper model, {bool forceValidate = false}) {
     model.setData(
       model.formValueMap
         ..addAll({
@@ -79,6 +80,11 @@ mixin $AuthView {
     if (_autoTextFieldValidation || forceValidate) {
       updateValidationData(model);
     }
+  }
+
+  bool validateFormFields(FormViewModel model) {
+    _updateFormData(model, forceValidate: true);
+    return model.isFormValid;
   }
 
   /// Calls dispose on all the generated controllers and focus nodes
@@ -97,18 +103,24 @@ mixin $AuthView {
   }
 }
 
-extension ValueProperties on FormViewModel {
-  bool get isFormValid =>
-      this.fieldsValidationMessages.values.every((element) => element == null);
+extension ValueProperties on FormStateHelper {
+  bool get hasAnyValidationMessage => this
+      .fieldsValidationMessages
+      .values
+      .any((validation) => validation != null);
+
+  bool get isFormValid {
+    if (!_autoTextFieldValidation) this.validateForm();
+
+    return !hasAnyValidationMessage;
+  }
+
   String? get accessTokenValue =>
       this.formValueMap[AccessTokenValueKey] as String?;
 
   set accessTokenValue(String? value) {
     this.setData(
-      this.formValueMap
-        ..addAll({
-          AccessTokenValueKey: value,
-        }),
+      this.formValueMap..addAll({AccessTokenValueKey: value}),
     );
 
     if (_AuthViewTextEditingControllers.containsKey(AccessTokenValueKey)) {
@@ -127,7 +139,7 @@ extension ValueProperties on FormViewModel {
       this.fieldsValidationMessages[AccessTokenValueKey];
 }
 
-extension Methods on FormViewModel {
+extension Methods on FormStateHelper {
   setAccessTokenValidationMessage(String? validationMessage) =>
       this.fieldsValidationMessages[AccessTokenValueKey] = validationMessage;
 
@@ -157,6 +169,7 @@ String? getValidationMessage(String key) {
 }
 
 /// Updates the fieldsValidationMessages on the FormViewModel
-void updateValidationData(FormViewModel model) => model.setValidationMessages({
+void updateValidationData(FormStateHelper model) =>
+    model.setValidationMessages({
       AccessTokenValueKey: getValidationMessage(AccessTokenValueKey),
     });

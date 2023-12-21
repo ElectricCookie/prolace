@@ -20,7 +20,7 @@ class ViewSelectorView extends StackedView<ViewSelectorModel> {
             itemBuilder: (context, index) {
               if (index == viewModel.views.length) {
                 return ListTile(
-                  title: Text("Magic Mirror Mode"),
+                  title: const Text("Magic Mirror Mode"),
                   onTap: () {
                     viewModel.onMagicMirrorModeSelected();
                   },
@@ -31,7 +31,7 @@ class ViewSelectorView extends StackedView<ViewSelectorModel> {
 
               return ListTile(
                 leading: view.path == viewModel.currentView
-                    ? Icon(Icons.check)
+                    ? const Icon(Icons.check)
                     : null,
                 title: Text(viewModel.views[index].title ?? ""),
                 onTap: () {

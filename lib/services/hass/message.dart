@@ -14,6 +14,8 @@ class Message {
   dynamic result;
   HassEvent? event;
   String? accessToken;
+  String? template;
+  bool? reportErrors;
   String? message;
   String? domain;
   String? service;
@@ -29,9 +31,12 @@ class Message {
     this.message,
     this.result,
     this.success,
+    this.event,
+    this.reportErrors,
     this.serviceData,
     this.domain,
     this.service,
+    this.template,
     this.target,
     this.eventType,
   });

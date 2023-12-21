@@ -47,7 +47,7 @@ class AuthService extends ChangeNotifier {
 
     _handler = MobileAuth(
         address: _settingsService.internalUrl!,
-        redirectUrl: "com.example.prolace://login-callback",
+        redirectUrl: "com.conmags.prolace://login-callback",
         clientId: "https://electriccookie.github.io/prolace/",
         scopes: []);
 
@@ -58,7 +58,7 @@ class AuthService extends ChangeNotifier {
     _status = AuthServiceStatus.loading;
     notifyListeners();
 
-    if (await hasLongLivedToken) {
+    if (hasLongLivedToken) {
       _status = AuthServiceStatus.loggedIn;
       notifyListeners();
       return;
@@ -187,7 +187,7 @@ class AuthService extends ChangeNotifier {
   // Try to log the user in. Returns a future bool whether the attempt was successful.
   Future<void> login() async {
     if (_handler == null) {
-      init();
+      await init();
     }
     var result = await _handler!.login();
     _saveTokens(result);

@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:home_portal/services/hass/models/lovelace.dart';
 import 'package:home_portal/views/screens/home/home_model.dart';
+import 'package:home_portal/views/screens/home/lovelace/cards/base_card.dart';
+import 'package:home_portal/views/screens/home/lovelace/slider.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
-
-import '../icons.dart';
 
 class InputNumberCard extends HookViewModelWidget<HomeModel> {
   final LovelaceCard card;
   const InputNumberCard(this.card, {super.key});
 
   @override
-  Widget buildViewModelWidget(BuildContext context, HomeModel viewModel) {
-    var state = viewModel.getEntityState(card.entity);
-    var attributes = viewModel.getEntityAttributes(card.entity);
+  Widget buildViewModelWidget(BuildContext context, HomeModel model) {
+    var state = model.getEntityState(card.entity);
+    var attributes = model.getEntityAttributes(card.entity);
+
+    double step = attributes["step"] ?? 1.0;
 
     var initialValue = double.tryParse(state ?? "0.0") ?? 0.0;
 
@@ -24,36 +26,37 @@ class InputNumberCard extends HookViewModelWidget<HomeModel> {
       return null;
     }, [initialValue]);
 
-    return Card(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.grey.shade800,
-            radius: 16,
-            foregroundColor: Colors.grey.shade400,
-            child: Icon(
-              getIcon(attributes["icon"] ?? ""),
-              size: 16,
+    return BaseCard(
+        card: card,
+        isOn: true,
+        onColor: Colors.lightBlue.shade400,
+        title: Text(
+          model.getEntityName(card.entity) ?? "",
+        ),
+        subtitle: Text(
+          model.getStateName(card.entity!),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: CustomSlider(
+                      color: Colors.lightBlue.shade400,
+                      value: number.value,
+                      min: attributes["min"] ?? 0.0,
+                      onChanged: (value) {
+                        // Round to nearest step
+                        value = (value / step).round() * step;
+                        number.value = value;
+                        model.adjustInputNumber(card.entity!, value);
+                      },
+                      max: attributes["max"] ?? 100.0),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(viewModel.getEntityName(card.entity) ?? "",
-                  style: Theme.of(context).textTheme.titleMedium,
-                  overflow: TextOverflow.ellipsis),
-              Text(
-                number.value.toStringAsFixed(1),
-                style: Theme.of(context).textTheme.caption,
-              ),
-            ],
-          ))
-        ],
-      ),
-    ));
+          ],
+        ));
   }
 }

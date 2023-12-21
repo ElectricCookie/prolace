@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'config.dart';
 
@@ -129,11 +129,11 @@ class _$HassConfigCopyWithImpl<$Res, $Val extends HassConfig>
 }
 
 /// @nodoc
-abstract class _$$_HassConfigCopyWith<$Res>
+abstract class _$$HassConfigImplCopyWith<$Res>
     implements $HassConfigCopyWith<$Res> {
-  factory _$$_HassConfigCopyWith(
-          _$_HassConfig value, $Res Function(_$_HassConfig) then) =
-      __$$_HassConfigCopyWithImpl<$Res>;
+  factory _$$HassConfigImplCopyWith(
+          _$HassConfigImpl value, $Res Function(_$HassConfigImpl) then) =
+      __$$HassConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -152,11 +152,11 @@ abstract class _$$_HassConfigCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_HassConfigCopyWithImpl<$Res>
-    extends _$HassConfigCopyWithImpl<$Res, _$_HassConfig>
-    implements _$$_HassConfigCopyWith<$Res> {
-  __$$_HassConfigCopyWithImpl(
-      _$_HassConfig _value, $Res Function(_$_HassConfig) _then)
+class __$$HassConfigImplCopyWithImpl<$Res>
+    extends _$HassConfigCopyWithImpl<$Res, _$HassConfigImpl>
+    implements _$$HassConfigImplCopyWith<$Res> {
+  __$$HassConfigImplCopyWithImpl(
+      _$HassConfigImpl _value, $Res Function(_$HassConfigImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -172,7 +172,7 @@ class __$$_HassConfigCopyWithImpl<$Res>
     Object? version = null,
     Object? whitelistExternalDirs = null,
   }) {
-    return _then(_$_HassConfig(
+    return _then(_$HassConfigImpl(
       components: null == components
           ? _value._components
           : components // ignore: cast_nullable_to_non_nullable
@@ -215,8 +215,8 @@ class __$$_HassConfigCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_HassConfig implements _HassConfig {
-  const _$_HassConfig(
+class _$HassConfigImpl implements _HassConfig {
+  const _$HassConfigImpl(
       {required final List<String> components,
       required this.locationName,
       required this.latitude,
@@ -229,12 +229,13 @@ class _$_HassConfig implements _HassConfig {
       : _components = components,
         _whitelistExternalDirs = whitelistExternalDirs;
 
-  factory _$_HassConfig.fromJson(Map<String, dynamic> json) =>
-      _$$_HassConfigFromJson(json);
+  factory _$HassConfigImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HassConfigImplFromJson(json);
 
   final List<String> _components;
   @override
   List<String> get components {
+    if (_components is EqualUnmodifiableListView) return _components;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_components);
   }
@@ -256,6 +257,8 @@ class _$_HassConfig implements _HassConfig {
   final List<String> _whitelistExternalDirs;
   @override
   List<String> get whitelistExternalDirs {
+    if (_whitelistExternalDirs is EqualUnmodifiableListView)
+      return _whitelistExternalDirs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_whitelistExternalDirs);
   }
@@ -269,7 +272,7 @@ class _$_HassConfig implements _HassConfig {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HassConfig &&
+            other is _$HassConfigImpl &&
             const DeepCollectionEquality()
                 .equals(other._components, _components) &&
             (identical(other.locationName, locationName) ||
@@ -306,12 +309,12 @@ class _$_HassConfig implements _HassConfig {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HassConfigCopyWith<_$_HassConfig> get copyWith =>
-      __$$_HassConfigCopyWithImpl<_$_HassConfig>(this, _$identity);
+  _$$HassConfigImplCopyWith<_$HassConfigImpl> get copyWith =>
+      __$$HassConfigImplCopyWithImpl<_$HassConfigImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HassConfigToJson(
+    return _$$HassConfigImplToJson(
       this,
     );
   }
@@ -327,10 +330,10 @@ abstract class _HassConfig implements HassConfig {
       required final String timeZone,
       required final HassUnitSystem unitSystem,
       required final String version,
-      required final List<String> whitelistExternalDirs}) = _$_HassConfig;
+      required final List<String> whitelistExternalDirs}) = _$HassConfigImpl;
 
   factory _HassConfig.fromJson(Map<String, dynamic> json) =
-      _$_HassConfig.fromJson;
+      _$HassConfigImpl.fromJson;
 
   @override
   List<String> get components;
@@ -352,7 +355,7 @@ abstract class _HassConfig implements HassConfig {
   List<String> get whitelistExternalDirs;
   @override
   @JsonKey(ignore: true)
-  _$$_HassConfigCopyWith<_$_HassConfig> get copyWith =>
+  _$$HassConfigImplCopyWith<_$HassConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -422,22 +425,22 @@ class _$HassUnitSystemCopyWithImpl<$Res, $Val extends HassUnitSystem>
 }
 
 /// @nodoc
-abstract class _$$_HassUnitSystemCopyWith<$Res>
+abstract class _$$HassUnitSystemImplCopyWith<$Res>
     implements $HassUnitSystemCopyWith<$Res> {
-  factory _$$_HassUnitSystemCopyWith(
-          _$_HassUnitSystem value, $Res Function(_$_HassUnitSystem) then) =
-      __$$_HassUnitSystemCopyWithImpl<$Res>;
+  factory _$$HassUnitSystemImplCopyWith(_$HassUnitSystemImpl value,
+          $Res Function(_$HassUnitSystemImpl) then) =
+      __$$HassUnitSystemImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String length, String mass, String temperature, String volume});
 }
 
 /// @nodoc
-class __$$_HassUnitSystemCopyWithImpl<$Res>
-    extends _$HassUnitSystemCopyWithImpl<$Res, _$_HassUnitSystem>
-    implements _$$_HassUnitSystemCopyWith<$Res> {
-  __$$_HassUnitSystemCopyWithImpl(
-      _$_HassUnitSystem _value, $Res Function(_$_HassUnitSystem) _then)
+class __$$HassUnitSystemImplCopyWithImpl<$Res>
+    extends _$HassUnitSystemCopyWithImpl<$Res, _$HassUnitSystemImpl>
+    implements _$$HassUnitSystemImplCopyWith<$Res> {
+  __$$HassUnitSystemImplCopyWithImpl(
+      _$HassUnitSystemImpl _value, $Res Function(_$HassUnitSystemImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -448,7 +451,7 @@ class __$$_HassUnitSystemCopyWithImpl<$Res>
     Object? temperature = null,
     Object? volume = null,
   }) {
-    return _then(_$_HassUnitSystem(
+    return _then(_$HassUnitSystemImpl(
       length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
@@ -471,15 +474,15 @@ class __$$_HassUnitSystemCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_HassUnitSystem implements _HassUnitSystem {
-  const _$_HassUnitSystem(
+class _$HassUnitSystemImpl implements _HassUnitSystem {
+  const _$HassUnitSystemImpl(
       {required this.length,
       required this.mass,
       required this.temperature,
       required this.volume});
 
-  factory _$_HassUnitSystem.fromJson(Map<String, dynamic> json) =>
-      _$$_HassUnitSystemFromJson(json);
+  factory _$HassUnitSystemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HassUnitSystemImplFromJson(json);
 
   @override
   final String length;
@@ -499,7 +502,7 @@ class _$_HassUnitSystem implements _HassUnitSystem {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HassUnitSystem &&
+            other is _$HassUnitSystemImpl &&
             (identical(other.length, length) || other.length == length) &&
             (identical(other.mass, mass) || other.mass == mass) &&
             (identical(other.temperature, temperature) ||
@@ -515,12 +518,13 @@ class _$_HassUnitSystem implements _HassUnitSystem {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HassUnitSystemCopyWith<_$_HassUnitSystem> get copyWith =>
-      __$$_HassUnitSystemCopyWithImpl<_$_HassUnitSystem>(this, _$identity);
+  _$$HassUnitSystemImplCopyWith<_$HassUnitSystemImpl> get copyWith =>
+      __$$HassUnitSystemImplCopyWithImpl<_$HassUnitSystemImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_HassUnitSystemToJson(
+    return _$$HassUnitSystemImplToJson(
       this,
     );
   }
@@ -531,10 +535,10 @@ abstract class _HassUnitSystem implements HassUnitSystem {
       {required final String length,
       required final String mass,
       required final String temperature,
-      required final String volume}) = _$_HassUnitSystem;
+      required final String volume}) = _$HassUnitSystemImpl;
 
   factory _HassUnitSystem.fromJson(Map<String, dynamic> json) =
-      _$_HassUnitSystem.fromJson;
+      _$HassUnitSystemImpl.fromJson;
 
   @override
   String get length;
@@ -546,6 +550,6 @@ abstract class _HassUnitSystem implements HassUnitSystem {
   String get volume;
   @override
   @JsonKey(ignore: true)
-  _$$_HassUnitSystemCopyWith<_$_HassUnitSystem> get copyWith =>
+  _$$HassUnitSystemImplCopyWith<_$HassUnitSystemImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

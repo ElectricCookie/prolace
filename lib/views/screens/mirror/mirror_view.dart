@@ -1,7 +1,6 @@
-import 'package:animated_list_plus/animated_list_plus.dart';
-import 'package:animated_list_plus/transitions.dart';
 import 'package:flutter/material.dart';
 import 'package:home_portal/services/hass/models/states.dart';
+import 'package:home_portal/views/screens/home/activities/activities_view.dart';
 import 'package:home_portal/views/screens/home/lovelace/time.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,11 +30,17 @@ class MirrorView extends StackedView<MirrorModel> {
             width: MediaQuery.of(context).size.width / 3,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 8.0, top: MediaQuery.of(context).size.height / 3.0),
+                  left: 16.0, top: MediaQuery.of(context).size.height / 3.0),
               child: ListView(children: [
+                ActivitiesView(
+                    onMirror: true,
+                    appBarBuilder: (context, color, _) => Container()),
                 const DefaultTextStyle(
-                    style:
-                        TextStyle(fontSize: 128, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 128,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
                     child: TimeView()),
                 const SizedBox(height: 4),
                 Text(viewModel.date, style: const TextStyle(fontSize: 32)),
@@ -44,51 +49,35 @@ class MirrorView extends StackedView<MirrorModel> {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    Chip(
+                    _Chip(
                         label: Text(viewModel.lightStatus),
                         avatar: const Icon(Icons.light)),
-                    Chip(
+                    _Chip(
                         label:
                             Text("${viewModel.outsideTemperature}°C outside"),
                         avatar: const Icon(Icons.thermostat)),
-                    Chip(
+                    _Chip(
                         label: Text("${viewModel.outsideHumidity}%  outside"),
                         avatar: const Icon(Icons.water_drop)),
-                    Chip(
+                    _Chip(
                         label: Text(
                             "${viewModel.averageIndoorTemperature}°C avg inside"),
                         avatar: const Icon(Icons.thermostat)),
-                    Chip(
+                    _Chip(
                         label: Text(
                             "${viewModel.averageIndoorHumidity}%  avg inside"),
                         avatar: const Icon(Icons.water_drop)),
-                    Chip(
+                    _Chip(
                         label: Text(
                           viewModel.lockState,
                         ),
                         avatar: const Icon(Icons.lock)),
-                    Chip(
+                    _Chip(
                         label: Text(
                           "${viewModel.powerNow}W now",
                         ),
                         avatar: const Icon(Icons.power)),
                   ],
-                ),
-                const SizedBox(height: 64),
-                ImplicitlyAnimatedList<Entity>(
-                  items: viewModel.activeLights,
-                  shrinkWrap: true,
-                  areItemsTheSame: (a, b) => a.entityId == b.entityId,
-                  itemBuilder: (context, animation, item, index) {
-                    return SizeFadeTransition(
-                        sizeFraction: 0.7,
-                        curve: Curves.easeInOut,
-                        animation: animation,
-                        child: CardItem(
-                          state: viewModel.states[item.entityId]!,
-                          item: item,
-                        ));
-                  },
                 ),
               ]),
             ),
@@ -178,5 +167,42 @@ class CardItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _Chip extends StatelessWidget {
+  final Widget label;
+  final Widget avatar;
+
+  const _Chip({required this.label, required this.avatar, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 4.0,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconTheme(
+                data: const IconThemeData(color: Colors.black, size: 24),
+                child: avatar),
+            const SizedBox(
+              width: 4,
+            ),
+            DefaultTextStyle(
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+              child: label,
+            ),
+          ],
+        ));
   }
 }

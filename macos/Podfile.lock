@@ -11,6 +11,8 @@ PODS:
     - AppAuth (= 1.6.0)
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
+  - network_info_plus (0.0.1):
+    - FlutterMacOS
   - screen_brightness_macos (0.1.0):
     - FlutterMacOS
   - shared_preferences_foundation (0.0.1):
@@ -21,6 +23,7 @@ DEPENDENCIES:
   - bonsoir (from `Flutter/ephemeral/.symlinks/plugins/bonsoir/macos`)
   - flutter_appauth (from `Flutter/ephemeral/.symlinks/plugins/flutter_appauth/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - network_info_plus (from `Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos`)
   - screen_brightness_macos (from `Flutter/ephemeral/.symlinks/plugins/screen_brightness_macos/macos`)
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
 
@@ -35,6 +38,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_appauth/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  network_info_plus:
+    :path: Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos
   screen_brightness_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/screen_brightness_macos/macos
   shared_preferences_foundation:
@@ -45,9 +50,10 @@ SPEC CHECKSUMS:
   bonsoir: 9369e22a6b60a2b16e717b957e397117ee1ada5d
   flutter_appauth: adacee57756dd4640e12db56bd96812f0a0207b5
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  network_info_plus: f4fbc7877ab7b3294500d9441dfa53cd54972d05
   screen_brightness_macos: 2d6d3af2165592d9a55ffcd95b7550970e41ebda
-  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3

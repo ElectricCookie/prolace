@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DropAnimation extends StatefulWidget {
   Widget child;
   Duration delay;
-  DropAnimation({required this.child, required this.delay});
+  DropAnimation({super.key, required this.child, required this.delay});
 
   @override
   State<DropAnimation> createState() => _DropAnimationState();

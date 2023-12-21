@@ -3,7 +3,6 @@ import 'package:home_portal/services/settings/settings_service.dart';
 import 'package:http/http.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
@@ -12,10 +11,10 @@ import '../../../app/app.router.dart';
 import 'setup_view.form.dart';
 
 class SetupModel extends FormViewModel {
-  AutodiscoveryService _autodiscoveryService = locator<AutodiscoveryService>();
-  DialogService _dialogService = locator<DialogService>();
-  SettingsService _settingsService = locator<SettingsService>();
-  NavigationService _navigationService = locator<NavigationService>();
+  final _autodiscoveryService = locator<AutodiscoveryService>();
+  final _dialogService = locator<DialogService>();
+  final _settingsService = locator<SettingsService>();
+  final _navigationService = locator<NavigationService>();
 
   int? _port;
   String? _host;
@@ -27,7 +26,8 @@ class SetupModel extends FormViewModel {
   List<String> get hassInstances => _autodiscoveryService.hassInstances;
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_autodiscoveryService];
+  List<ListenableServiceMixin> get listenableServices =>
+      [_autodiscoveryService];
 
   @override
   void setFormStatus() {

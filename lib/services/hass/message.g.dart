@@ -14,14 +14,17 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
       message: json['message'] as String?,
       result: json['result'],
       success: json['success'] as bool?,
+      event: json['event'] == null
+          ? null
+          : HassEvent.fromJson(json['event'] as Map<String, dynamic>),
+      reportErrors: json['report_errors'] as bool?,
       serviceData: json['service_data'] as Map<String, dynamic>?,
       domain: json['domain'] as String?,
       service: json['service'] as String?,
+      template: json['template'] as String?,
       target: json['target'] as Map<String, dynamic>?,
       eventType: json['event_type'] as String?,
-    )..event = json['event'] == null
-        ? null
-        : HassEvent.fromJson(json['event'] as Map<String, dynamic>);
+    );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'type': instance.type,
@@ -32,6 +35,8 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'result': instance.result,
       'event': instance.event,
       'access_token': instance.accessToken,
+      'template': instance.template,
+      'report_errors': instance.reportErrors,
       'message': instance.message,
       'domain': instance.domain,
       'service': instance.service,

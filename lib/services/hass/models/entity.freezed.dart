@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'entity.dart';
 
@@ -96,9 +96,10 @@ class _$EntityCopyWithImpl<$Res, $Val extends Entity>
 }
 
 /// @nodoc
-abstract class _$$_EntityCopyWith<$Res> implements $EntityCopyWith<$Res> {
-  factory _$$_EntityCopyWith(_$_Entity value, $Res Function(_$_Entity) then) =
-      __$$_EntityCopyWithImpl<$Res>;
+abstract class _$$EntityImplCopyWith<$Res> implements $EntityCopyWith<$Res> {
+  factory _$$EntityImplCopyWith(
+          _$EntityImpl value, $Res Function(_$EntityImpl) then) =
+      __$$EntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -111,10 +112,11 @@ abstract class _$$_EntityCopyWith<$Res> implements $EntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_EntityCopyWithImpl<$Res>
-    extends _$EntityCopyWithImpl<$Res, _$_Entity>
-    implements _$$_EntityCopyWith<$Res> {
-  __$$_EntityCopyWithImpl(_$_Entity _value, $Res Function(_$_Entity) _then)
+class __$$EntityImplCopyWithImpl<$Res>
+    extends _$EntityCopyWithImpl<$Res, _$EntityImpl>
+    implements _$$EntityImplCopyWith<$Res> {
+  __$$EntityImplCopyWithImpl(
+      _$EntityImpl _value, $Res Function(_$EntityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -127,7 +129,7 @@ class __$$_EntityCopyWithImpl<$Res>
     Object? entityId = freezed,
     Object? name = freezed,
   }) {
-    return _then(_$_Entity(
+    return _then(_$EntityImpl(
       areaId: freezed == areaId
           ? _value.areaId
           : areaId // ignore: cast_nullable_to_non_nullable
@@ -159,8 +161,8 @@ class __$$_EntityCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Entity implements _Entity {
-  const _$_Entity(
+class _$EntityImpl implements _Entity {
+  const _$EntityImpl(
       {this.areaId,
       this.configEntryId,
       this.deviceId,
@@ -168,8 +170,8 @@ class _$_Entity implements _Entity {
       this.entityId,
       this.name});
 
-  factory _$_Entity.fromJson(Map<String, dynamic> json) =>
-      _$$_EntityFromJson(json);
+  factory _$EntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EntityImplFromJson(json);
 
   @override
   final String? areaId;
@@ -193,7 +195,7 @@ class _$_Entity implements _Entity {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Entity &&
+            other is _$EntityImpl &&
             (identical(other.areaId, areaId) || other.areaId == areaId) &&
             (identical(other.configEntryId, configEntryId) ||
                 other.configEntryId == configEntryId) &&
@@ -213,12 +215,12 @@ class _$_Entity implements _Entity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EntityCopyWith<_$_Entity> get copyWith =>
-      __$$_EntityCopyWithImpl<_$_Entity>(this, _$identity);
+  _$$EntityImplCopyWith<_$EntityImpl> get copyWith =>
+      __$$EntityImplCopyWithImpl<_$EntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EntityToJson(
+    return _$$EntityImplToJson(
       this,
     );
   }
@@ -231,9 +233,9 @@ abstract class _Entity implements Entity {
       final String? deviceId,
       final String? icon,
       final String? entityId,
-      final String? name}) = _$_Entity;
+      final String? name}) = _$EntityImpl;
 
-  factory _Entity.fromJson(Map<String, dynamic> json) = _$_Entity.fromJson;
+  factory _Entity.fromJson(Map<String, dynamic> json) = _$EntityImpl.fromJson;
 
   @override
   String? get areaId;
@@ -249,6 +251,6 @@ abstract class _Entity implements Entity {
   String? get name;
   @override
   @JsonKey(ignore: true)
-  _$$_EntityCopyWith<_$_Entity> get copyWith =>
+  _$$EntityImplCopyWith<_$EntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:home_portal/services/hass/models/entity.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -27,6 +29,24 @@ class SettingsModel extends ReactiveViewModel {
   List<String> get screenSaverEntities => _settingsService.screenSaverEntities;
 
   bool get allowNavigation => _settingsService.allowNavigation;
+
+  ProlaceThemeMode get themeMode => _settingsService.themeMode;
+
+  set themeMode(ProlaceThemeMode mode) {
+    _settingsService.themeMode = mode;
+  }
+
+  Color get seedColor => _settingsService.seedColor;
+
+  set seedColor(Color color) {
+    _settingsService.seedColor = color;
+  }
+
+  Color get seedColorDark => _settingsService.seedColorDark;
+
+  set seedColorDark(Color color) {
+    _settingsService.seedColorDark = color;
+  }
 
   String get pinnedView => _settingsService.pinnedView;
 

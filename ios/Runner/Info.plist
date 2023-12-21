@@ -45,6 +45,10 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Looking for local Home Assistant instances</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Used to determine whether internal or external url should be used</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Used to determine whether internal or external url should be used</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

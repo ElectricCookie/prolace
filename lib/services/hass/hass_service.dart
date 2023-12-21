@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:home_portal/services/hass/models/lovelace.dart';
 import 'package:home_portal/services/hass/models/states.dart';
+import 'package:http/http.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -43,22 +46,70 @@ class HassService with ListenableServiceMixin {
 
   IOWebSocketChannel? _channel;
 
-  // Initialize the service
-  void init() async {
-    print("Connecting...");
-    // Create a new websocket
-    String? url;
-    if (_settingsService.internalUrl?.contains("https://") == true) {
-      url = _settingsService.internalUrl?.replaceAll("https://", "wss://");
-    } else {
-      url = _settingsService.internalUrl?.replaceAll("http://", "ws://");
+  Future<bool> shouldUseExternalUrl() async {
+    if (_settingsService.externalUrl == null) {
+      return false;
     }
 
-    if (url == null) {
-      throw Exception("Internal url is null");
+    if (await Permission.locationWhenInUse.isLimited ||
+        await Permission.locationWhenInUse.isRestricted ||
+        await Permission.locationWhenInUse.isPermanentlyDenied ||
+        await Permission.locationWhenInUse.isDenied) {
+      await Permission.locationWhenInUse.request();
     }
+
+    final info = NetworkInfo();
+
+    final wifiName = await info.getWifiName();
+
+    if (wifiName == null) {
+      return true;
+    }
+
+    if (_settingsService.internalSsids.contains(wifiName)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<String?> urlWs() async {
+    if (await shouldUseExternalUrl()) {
+      return _settingsService.externalUrl
+          ?.replaceAll("http://", "ws://")
+          .replaceAll("https://", "wss://");
+    }
+
+    return _settingsService.internalUrl
+        ?.replaceAll("http://", "ws://")
+        .replaceAll("https://", "wss://");
+  }
+
+  String? get url {
+    return _settingsService.internalUrl;
+  }
+
+  String cameraImage(String entityId) {
+    final state = _state[entityId];
+    final accessToken = state?.attributes["access_token"];
+
+    return "$url/api/camera_proxy/$entityId?token=$accessToken";
+  }
+
+  // Initialize the service
+  void init() async {
+    shouldUseExternalUrl();
+
+    final wsUrl = await urlWs();
+
+    if (wsUrl == null) {
+      return;
+    }
+
+    print(wsUrl);
+
     try {
-      _channel = IOWebSocketChannel.connect(Uri.parse("$url/api/websocket"));
+      _channel = IOWebSocketChannel.connect(Uri.parse("$wsUrl/api/websocket"));
 
       _channel!.stream.listen((event) async {
         // Handle the event
@@ -77,8 +128,6 @@ class HassService with ListenableServiceMixin {
               ..removeWhere((key, value) => value == null)));
             break;
           case "auth_ok":
-            _ready.value = true;
-
             send(Message(type: "subscribe_events", eventType: "state_changed"));
 
             var states = await send(Message(type: "get_states"));
@@ -122,7 +171,7 @@ class HassService with ListenableServiceMixin {
               return 0;
             });
 
-            getLikeleyRoom();
+            _ready.value = true;
 
             notifyListeners();
 
@@ -175,41 +224,17 @@ class HassService with ListenableServiceMixin {
 
   int getLikeleyRoom() {
     HassState? likelyRoom;
-    DateTime? likelyRoomChanged;
+    DateTime likelyRoomChanged = DateTime(0);
+
     for (var element in state.entries) {
       var itemState = element.value;
-      if (itemState.attributes["device_class"] == "motion") {
-        // Find the area this entity is in
-        var entity = _entities.firstWhereOrNull(
-          (element) => element.entityId == itemState.entityId,
-        );
-        if (entity == null) {
+      if (itemState.attributes["device_class"] == "motion" &&
+          itemState.state == "on") {
+        // If this sensor has a more recent change time than the current one make it the likely room
+        if (DateTime.parse(itemState.lastChanged!).isAfter(likelyRoomChanged)) {
+          likelyRoom = itemState;
+          likelyRoomChanged = DateTime.parse(itemState.lastChanged!);
           continue;
-        }
-        if (entity.areaId != null) {
-          // If this is the first item make it the likely room
-          if (likelyRoomChanged == null) {
-            likelyRoom = itemState;
-            likelyRoomChanged = DateTime.parse(itemState.lastChanged!);
-            continue;
-          }
-
-          // If this sensor is active, and the current one isnt make it the likely room
-          if (itemState.state == "on" && likelyRoom?.state != "on") {
-            likelyRoom = itemState;
-            likelyRoomChanged = DateTime.parse(itemState.lastChanged!);
-
-            continue;
-          }
-
-          // If this sensor has a more recent change time than the current one make it the likely room
-          if (DateTime.parse(itemState.lastChanged!)
-              .isAfter(likelyRoomChanged)) {
-            likelyRoom = itemState;
-
-            likelyRoomChanged = DateTime.parse(itemState.lastChanged!);
-            continue;
-          }
         }
       }
     }
@@ -221,9 +246,15 @@ class HassService with ListenableServiceMixin {
         (element) => element.entityId == likelyRoom!.entityId,
       );
 
+      if (entity == null) {
+        return 0;
+      }
+
       var view = lovelaceViews.indexWhere(
-        (element) =>
-            element.title?.toLowerCase().contains(entity?.areaId ?? "") == true,
+        (element) => viewContainsEntity(
+          entity.entityId!,
+          element,
+        ),
       );
 
       if (view != -1) {
@@ -233,11 +264,41 @@ class HassService with ListenableServiceMixin {
     return 0;
   }
 
+  bool viewContainsEntity(String entityId, LovelaceView view) {
+    for (final card in view.cards ?? []) {
+      if (card.entity == entityId) {
+        return true;
+      }
+      if (card.chips != null) {
+        for (final chip in card.chips!) {
+          if (chip.entity == entityId) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  Future<String> renderTemplate(
+    String template,
+  ) async {
+    final baseUrl = url;
+    if (baseUrl == null) {
+      return "";
+    }
+    final token = _authService.hasLongLivedToken
+        ? _authService.longLivedToken
+        : _authService.accessToken;
+    final result = await post(Uri.parse("$baseUrl/api/template"),
+        headers: {"Authorization": "Bearer $token"},
+        body: jsonEncode({"template": template}));
+    return result.body;
+  }
+
   // Send a message to the server
   Future<Message> send(Message message) async {
-    if (!_ready.value) {
-      throw Exception("Not ready");
-    }
     var completer = Completer<Message>();
     _completers[messageCount] = completer;
     message.id = messageCount;

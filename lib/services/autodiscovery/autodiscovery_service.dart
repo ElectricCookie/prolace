@@ -5,7 +5,7 @@ import 'package:stacked/stacked.dart';
 
 String hassAutoDiscoveryService = "_home-assistant._tcp";
 
-class AutodiscoveryService with ReactiveServiceMixin {
+class AutodiscoveryService with ListenableServiceMixin {
   final _hassInstances = ReactiveList<String>();
 
   List<String> get hassInstances => _hassInstances;
@@ -19,13 +19,11 @@ class AutodiscoveryService with ReactiveServiceMixin {
 
   // setup bonsoir
   void init() async {
-    print("Setting up bonjour");
     _discovery = BonsoirDiscovery(type: hassAutoDiscoveryService);
     await _discovery!.ready;
     await _discovery!.start();
 
     _subscription = _discovery!.eventStream?.listen((event) {
-      print(event);
       if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
         var service = event.service as ResolvedBonsoirService;
         var serviceAddress = "${service.ip}:${service.port}";

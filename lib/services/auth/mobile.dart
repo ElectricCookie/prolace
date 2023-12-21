@@ -9,7 +9,7 @@ class MobileAuth extends OAuthHandler {
   final String redirectUrl;
   final List<String> scopes;
 
-  final FlutterAppAuth appAuth = FlutterAppAuth();
+  final FlutterAppAuth appAuth = const FlutterAppAuth();
 
   MobileAuth({
     required this.address,

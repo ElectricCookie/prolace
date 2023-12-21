@@ -1,10 +1,17 @@
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:home_portal/views/colors.dart';
 
 class CustomSlider extends StatefulWidget {
   final double value;
   final double min;
   final double max;
+  final bool show;
+  final Color? color;
+  final Gradient? gradient;
   final double step;
+
   final Function(double) onChanged;
 
   const CustomSlider({
@@ -12,6 +19,9 @@ class CustomSlider extends StatefulWidget {
     required this.value,
     required this.min,
     required this.onChanged,
+    this.gradient,
+    this.color,
+    this.show = true,
     required this.max,
     this.step = 1,
   }) : super(key: key);
@@ -32,7 +42,8 @@ class _CustomSliderState extends State<CustomSlider>
       duration: const Duration(milliseconds: 1000),
     );
 
-    _valueController.value = widget.value / (widget.max - widget.min);
+    _valueController.value =
+        (widget.value - widget.min) / (widget.max - widget.min);
 
     _controller = AnimationController(
       vsync: this,
@@ -45,7 +56,8 @@ class _CustomSliderState extends State<CustomSlider>
   void didUpdateWidget(covariant CustomSlider oldWidget) {
     if (oldWidget.value != widget.value) {
       setState(() {
-        _valueController.animateTo(widget.value / (widget.max - widget.min),
+        _valueController.animateTo(
+            (widget.value - widget.min) / (widget.max - widget.min),
             curve: Curves.easeInOut);
       });
       _controller.reverse(from: 1);
@@ -62,11 +74,25 @@ class _CustomSliderState extends State<CustomSlider>
 
   @override
   build(BuildContext context) {
-    return Container(
-        height: 32,
+    const sliderHeight = 42.0;
+    const radius = 12.0;
+
+    final sliderColor = widget.color ?? Colors.yellow.shade600;
+
+    final onSliderColor =
+        sliderColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        height: widget.show ? sliderHeight : 0,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).appBarTheme.backgroundColor,
+          borderRadius: BorderRadius.circular(radius),
+          border: !widget.show
+              ? null
+              : Border.all(
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                  color: borderColor(context),
+                ),
         ),
         clipBehavior: Clip.hardEdge,
         child: LayoutBuilder(
@@ -74,30 +100,31 @@ class _CustomSliderState extends State<CustomSlider>
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onHorizontalDragStart: (details) {
-              _controller.forward();
+              _controller.value = 1;
               _valueController.stop();
             },
             onHorizontalDragUpdate: (details) {
+              HapticFeedback.lightImpact();
               setState(() {
                 var value = _valueController.value +=
                     (details.delta.dx) / constraints.maxWidth;
-                print(value);
+
                 _valueController.value = value.clamp(0, 1);
               });
             },
             onTapUp: (TapUpDetails details) {
-              print(details.localPosition.dx);
-
               var value = (details.localPosition.dx) / constraints.maxWidth;
-              print(value);
+
               _valueController.value = value.clamp(0, 1);
               widget.onChanged(
-                  _valueController.value * (widget.max - widget.min));
+                  _valueController.value * (widget.max - widget.min) +
+                      widget.min);
             },
             onHorizontalDragEnd: (details) {
               _controller.reverse(from: 1);
               widget.onChanged(
-                  _valueController.value * (widget.max - widget.min));
+                  _valueController.value * (widget.max - widget.min) +
+                      widget.min);
             },
             child: Stack(children: [
               AnimatedBuilder(
@@ -108,34 +135,74 @@ class _CustomSliderState extends State<CustomSlider>
                       Flexible(
                         flex: (_valueController.value * 100).round(),
                         child: Container(
-                          height: 32,
-                          decoration:
-                              BoxDecoration(color: Colors.yellow.shade600),
+                          height: sliderHeight,
+                          decoration: BoxDecoration(
+                            color: widget.gradient != null ? null : sliderColor,
+                            gradient: widget.gradient,
+                          ),
+                          child: Stack(
+                            children: [
+                              if (_valueController.value >= 0.5)
+                                Align(
+                                    alignment: Alignment.center,
+                                    child: AnimatedFlipCounter(
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      textStyle:
+                                          TextStyle(color: onSliderColor),
+                                      value: (_valueController.value *
+                                                  (widget.max - widget.min) +
+                                              widget.min)
+                                          .round(),
+                                    )),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Transform.translate(
+                                  offset: const Offset(6, 0),
+                                  child: Container(
+                                    height: sliderHeight - 10,
+                                    width: 12,
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 0),
+                                        )
+                                      ],
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Flexible(
                         flex: (100 - (_valueController.value * 100)).round(),
-                        child: Container(
-                          height: 32,
+                        child: SizedBox(
+                          height: sliderHeight,
+                          child: Stack(children: [
+                            if (_valueController.value < 0.5)
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: AnimatedFlipCounter(
+                                    duration: const Duration(milliseconds: 500),
+                                    textStyle: TextStyle(color: sliderColor),
+                                    value: (_valueController.value *
+                                                (widget.max - widget.min) +
+                                            widget.min)
+                                        .round(),
+                                  )),
+                          ]),
                         ),
                       ),
                     ],
                   );
                 },
               ),
-              Align(
-                  alignment: Alignment.center,
-                  child: AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        return Opacity(
-                            opacity: _controller.value,
-                            child: Text(
-                              "${(_valueController.value * 100).round()}%",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 16, height: 1),
-                            ));
-                      })),
             ]),
           );
         }));

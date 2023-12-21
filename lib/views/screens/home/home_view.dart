@@ -1,8 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:home_portal/services/hass/models/lovelace.dart';
+import 'package:home_portal/views/colors.dart';
+import 'package:home_portal/views/screens/home/activities/activities_view.dart';
 import 'package:home_portal/views/screens/home/home_model.dart';
 import 'package:home_portal/views/screens/home/lovelace/lovelace_page.dart';
 import 'package:home_portal/views/screens/home/lovelace/time.dart';
@@ -23,27 +23,27 @@ class HomeView extends HookWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeModel>.reactive(
         viewModelBuilder: () => HomeModel(),
-        onModelReady: (model) => model.init(),
+        onViewModelReady: (model) => model.init(),
         builder: (context, model, child) => const LovelaceWrapper());
   }
 }
 
-class LovelaceWrapper extends HookViewModelWidget<HomeModel> {
+class LovelaceWrapper extends StackedHookView<HomeModel> {
   const LovelaceWrapper({super.key});
 
   @override
-  Widget buildViewModelWidget(BuildContext context, viewModel) {
-    if (!viewModel.ready || viewModel.lovelaceViews.isEmpty) {
+  Widget builder(BuildContext context, model) {
+    if (!model.ready || model.lovelaceViews.isEmpty) {
       return const Scaffold(
           body: Center(
         child: CircularProgressIndicator(),
       ));
     }
 
-    if (!viewModel.screenOn) {
+    if (!model.screenOn) {
       return GestureDetector(
           onTap: () {
-            viewModel.wake();
+            model.wake();
           },
           child: Scaffold(
             body: Center(
@@ -56,7 +56,7 @@ class LovelaceWrapper extends HookViewModelWidget<HomeModel> {
                       style: TextStyle(fontSize: 32, color: Colors.white),
                       child: TimeView()),
                   const SizedBox(height: 16),
-                  ...viewModel.screenSaverEntities
+                  ...model.screenSaverEntities
                       .map(
                         (e) => CardView(
                           LovelaceCard(
@@ -71,36 +71,88 @@ class LovelaceWrapper extends HookViewModelWidget<HomeModel> {
           ));
     }
 
-    if (viewModel.allowNavigation) {
+    if (model.allowNavigation) {
       return DynamicTabBar(
-        initialIndex: viewModel.likelyView,
-        tabs: viewModel.lovelaceViews
+        appBar: Column(
+          children: [
+            ActivitiesView(
+              appBarBuilder: (context, textColor, hasTimers) => Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: borderColor(context)))),
+                padding: EdgeInsets.symmetric(
+                    vertical: hasTimers ? 4 : 8, horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: hasTimers ? 14 : 24,
+                            fontWeight: FontWeight.bold,
+                            color: hasTimers
+                                ? Theme.of(context).colorScheme.onPrimary
+                                : textColor,
+                          ),
+                          child: const TimeView(),
+                        ),
+                        if (!hasTimers)
+                          DefaultTextStyle(
+                            style: TextStyle(
+                                color: hasTimers
+                                    ? Theme.of(context).colorScheme.onPrimary
+                                    : textColor),
+                            child: const DateView(),
+                          ),
+                      ],
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.settings,
+                        color: textColor,
+                      ),
+                      onPressed: () {
+                        var navigationService = locator<NavigationService>();
+                        navigationService.navigateTo(Routes.settingsView);
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        initialIndex: model.likelyView,
+        tabs: model.lovelaceViews
             .where(
               (element) => element.visible?.isEmpty != true,
             )
             .map((view) => BottomNavigationBarItem(
-                backgroundColor: Colors.grey.shade900,
                 label: view.title ?? "",
-                icon: Icon(getIcon(view.icon ?? ""))))
+                icon: Icon(
+                  getIcon(view.icon ?? ""),
+                  color: Theme.of(context).colorScheme.onBackground,
+                )))
             .toList(),
         children:
-            viewModel.lovelaceViews.map((view) => LovelacePage(view)).toList(),
+            model.lovelaceViews.map((view) => LovelacePage(view)).toList(),
       );
     } else {
-      if (viewModel.isMirror) {
-        return MirrorView();
+      if (model.isMirror) {
+        return const MirrorView();
       }
 
       return Scaffold(
           appBar: buildHomeAppbar(context),
-          body: LovelacePage(viewModel.pinnedView));
+          body: LovelacePage(model.pinnedView));
     }
   }
 }
 
 buildHomeAppbar(BuildContext context) {
   return AppBar(
-    elevation: 1,
     title: const TimeView(),
     actions: [
       IconButton(
@@ -116,12 +168,14 @@ buildHomeAppbar(BuildContext context) {
 
 class DynamicTabBar extends StatefulWidget {
   final List<Widget> children;
+  final Widget? appBar;
   final int initialIndex;
   final List<BottomNavigationBarItem> tabs;
 
   const DynamicTabBar(
       {super.key,
       required this.children,
+      this.appBar,
       required this.tabs,
       this.initialIndex = 0});
 
@@ -168,24 +222,43 @@ class _DynamicTabBarState extends State<DynamicTabBar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildHomeAppbar(context),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.grey.shade200,
-        selectedItemColor: Colors.white,
-        items: widget.tabs,
-        currentIndex: _tabController.hasClients
-            ? _tabController.page?.round() ?? 0
-            : widget.initialIndex,
-        onTap: (value) async {
-          await _tabController.animateToPage(value,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeInOut);
-          setState(() {});
-        },
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: navigationBarColor(context),
+          boxShadow: [
+            BoxShadow(
+                color: shadowColor(context),
+                blurRadius: 16,
+                offset: const Offset(0, -2))
+          ],
+        ),
+        child: BottomNavigationBar(
+          items: widget.tabs,
+          elevation: 3,
+          backgroundColor: navigationBarColor(context),
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          unselectedItemColor: Theme.of(context).colorScheme.onBackground,
+          currentIndex: _tabController.hasClients
+              ? _tabController.page?.round() ?? 0
+              : widget.initialIndex,
+          onTap: (value) async {
+            await _tabController.animateToPage(value,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut);
+            setState(() {});
+          },
+        ),
       ),
-      body: PageView(
-        controller: _tabController,
-        children: widget.children,
+      body: Column(
+        children: [
+          if (widget.appBar != null) widget.appBar!,
+          Expanded(
+            child: PageView(
+              controller: _tabController,
+              children: widget.children,
+            ),
+          ),
+        ],
       ),
     );
   }
